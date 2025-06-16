@@ -1,0 +1,4910 @@
+{
+  "address": "PYEJEeRZLiLjVuBXnGqWgsPJzCazshbmiCk5oQ2CMQe",
+  "metadata": {
+    "name": "bonds",
+    "version": "0.2.1",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "counter_party_redeem_pt",
+      "discriminator": [
+        249,
+        86,
+        174,
+        139,
+        141,
+        37,
+        85,
+        15
+      ],
+      "accounts": [
+        {
+          "name": "global_settings"
+        },
+        {
+          "name": "global_counter_party",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  117,
+                  110,
+                  116,
+                  101,
+                  114,
+                  95,
+                  112,
+                  97,
+                  114,
+                  116,
+                  121
+                ]
+              }
+            ]
+          },
+          "relations": [
+            "global_settings"
+          ]
+        },
+        {
+          "name": "counter_party_pt",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "global_counter_party"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "principal_token_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "bond",
+          "writable": true
+        },
+        {
+          "name": "stake_account",
+          "writable": true,
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "yield_token_mint",
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "principal_token_mint",
+          "writable": true,
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "CounterPartyRedeemPtArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "counter_party_redeem_yt",
+      "discriminator": [
+        35,
+        102,
+        235,
+        234,
+        225,
+        152,
+        174,
+        125
+      ],
+      "accounts": [
+        {
+          "name": "global_settings"
+        },
+        {
+          "name": "global_counter_party",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  117,
+                  110,
+                  116,
+                  101,
+                  114,
+                  95,
+                  112,
+                  97,
+                  114,
+                  116,
+                  121
+                ]
+              }
+            ]
+          },
+          "relations": [
+            "global_settings"
+          ]
+        },
+        {
+          "name": "counter_party_yt",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "global_counter_party"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "yield_token_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "bond",
+          "writable": true
+        },
+        {
+          "name": "stake_account",
+          "writable": true,
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "yield_token_mint",
+          "writable": true,
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "principal_token_mint",
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "CounterPartyRedeemYtArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "counter_party_update_liquid_reserve",
+      "discriminator": [
+        115,
+        152,
+        91,
+        23,
+        14,
+        158,
+        247,
+        72
+      ],
+      "accounts": [
+        {
+          "name": "global_settings"
+        },
+        {
+          "name": "global_counter_party",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  117,
+                  110,
+                  116,
+                  101,
+                  114,
+                  95,
+                  112,
+                  97,
+                  114,
+                  116,
+                  121
+                ]
+              }
+            ]
+          },
+          "relations": [
+            "global_settings"
+          ]
+        },
+        {
+          "name": "counter_party_pt",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "global_counter_party"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "principal_token_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "counter_party_yt",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "global_counter_party"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "yield_token_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "bond",
+          "writable": true
+        },
+        {
+          "name": "stake_account",
+          "writable": true,
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "yield_token_mint",
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "principal_token_mint",
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "clock",
+          "address": "SysvarC1ock11111111111111111111111111111111"
+        },
+        {
+          "name": "stake_program",
+          "address": "Stake11111111111111111111111111111111111111"
+        },
+        {
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
+        },
+        {
+          "name": "stake_history",
+          "address": "SysvarStakeHistory1111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "counter_party_withdraw_sol",
+      "docs": [
+        "Allows the fee admin to withdraw SOL from the global counter party wallet."
+      ],
+      "discriminator": [
+        103,
+        139,
+        72,
+        81,
+        208,
+        19,
+        133,
+        54
+      ],
+      "accounts": [
+        {
+          "name": "global_admin",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "global_settings"
+          ]
+        },
+        {
+          "name": "global_settings"
+        },
+        {
+          "name": "global_counter_party",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  117,
+                  110,
+                  116,
+                  101,
+                  114,
+                  95,
+                  112,
+                  97,
+                  114,
+                  116,
+                  121
+                ]
+              }
+            ]
+          },
+          "relations": [
+            "global_settings"
+          ]
+        },
+        {
+          "name": "stake_program",
+          "address": "Stake11111111111111111111111111111111111111"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "CounterPartyWithdrawSolArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "deposit",
+      "docs": [
+        "Handles depositing an LST into the StakePoolBond and mints PTs and YTs to the depositor."
+      ],
+      "discriminator": [
+        242,
+        35,
+        198,
+        137,
+        82,
+        225,
+        242,
+        182
+      ],
+      "accounts": [
+        {
+          "name": "owner_lst",
+          "writable": true
+        },
+        {
+          "name": "deposit_shared",
+          "accounts": [
+            {
+              "name": "owner",
+              "writable": true,
+              "signer": true
+            },
+            {
+              "name": "owner_pt",
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "account",
+                    "path": "owner"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "token_program"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "principal_token_mint"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    140,
+                    151,
+                    37,
+                    143,
+                    78,
+                    36,
+                    137,
+                    241,
+                    187,
+                    61,
+                    16,
+                    41,
+                    20,
+                    142,
+                    13,
+                    131,
+                    11,
+                    90,
+                    19,
+                    153,
+                    218,
+                    255,
+                    16,
+                    132,
+                    4,
+                    142,
+                    123,
+                    216,
+                    219,
+                    233,
+                    248,
+                    89
+                  ]
+                }
+              }
+            },
+            {
+              "name": "owner_yt",
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "account",
+                    "path": "owner"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "token_program"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "yield_token_mint"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    140,
+                    151,
+                    37,
+                    143,
+                    78,
+                    36,
+                    137,
+                    241,
+                    187,
+                    61,
+                    16,
+                    41,
+                    20,
+                    142,
+                    13,
+                    131,
+                    11,
+                    90,
+                    19,
+                    153,
+                    218,
+                    255,
+                    16,
+                    132,
+                    4,
+                    142,
+                    123,
+                    216,
+                    219,
+                    233,
+                    248,
+                    89
+                  ]
+                }
+              }
+            },
+            {
+              "name": "bond"
+            },
+            {
+              "name": "stake_pool",
+              "writable": true,
+              "relations": [
+                "bond"
+              ]
+            },
+            {
+              "name": "lst_vault",
+              "writable": true,
+              "relations": [
+                "bond"
+              ]
+            },
+            {
+              "name": "lst_mint",
+              "writable": true
+            },
+            {
+              "name": "principal_token_mint",
+              "writable": true,
+              "relations": [
+                "bond"
+              ]
+            },
+            {
+              "name": "yield_token_mint",
+              "writable": true,
+              "relations": [
+                "bond"
+              ]
+            },
+            {
+              "name": "global_settings"
+            },
+            {
+              "name": "protocol_fee_wallet",
+              "relations": [
+                "global_settings"
+              ]
+            },
+            {
+              "name": "fee_wallet_pt",
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "account",
+                    "path": "protocol_fee_wallet"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "token_program"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "principal_token_mint"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    140,
+                    151,
+                    37,
+                    143,
+                    78,
+                    36,
+                    137,
+                    241,
+                    187,
+                    61,
+                    16,
+                    41,
+                    20,
+                    142,
+                    13,
+                    131,
+                    11,
+                    90,
+                    19,
+                    153,
+                    218,
+                    255,
+                    16,
+                    132,
+                    4,
+                    142,
+                    123,
+                    216,
+                    219,
+                    233,
+                    248,
+                    89
+                  ]
+                }
+              }
+            },
+            {
+              "name": "fee_wallet_yt",
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "account",
+                    "path": "protocol_fee_wallet"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "token_program"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "yield_token_mint"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    140,
+                    151,
+                    37,
+                    143,
+                    78,
+                    36,
+                    137,
+                    241,
+                    187,
+                    61,
+                    16,
+                    41,
+                    20,
+                    142,
+                    13,
+                    131,
+                    11,
+                    90,
+                    19,
+                    153,
+                    218,
+                    255,
+                    16,
+                    132,
+                    4,
+                    142,
+                    123,
+                    216,
+                    219,
+                    233,
+                    248,
+                    89
+                  ]
+                }
+              }
+            },
+            {
+              "name": "associated_token_program",
+              "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+            },
+            {
+              "name": "token_program"
+            },
+            {
+              "name": "lst_token_program"
+            },
+            {
+              "name": "system_program",
+              "address": "11111111111111111111111111111111"
+            }
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "DepositArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "deposit_sol",
+      "docs": [
+        "For using SOL to deposit into an LST Bond"
+      ],
+      "discriminator": [
+        108,
+        81,
+        78,
+        117,
+        125,
+        155,
+        56,
+        200
+      ],
+      "accounts": [
+        {
+          "name": "deposit_shared",
+          "accounts": [
+            {
+              "name": "owner",
+              "writable": true,
+              "signer": true
+            },
+            {
+              "name": "owner_pt",
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "account",
+                    "path": "owner"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "token_program"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "principal_token_mint"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    140,
+                    151,
+                    37,
+                    143,
+                    78,
+                    36,
+                    137,
+                    241,
+                    187,
+                    61,
+                    16,
+                    41,
+                    20,
+                    142,
+                    13,
+                    131,
+                    11,
+                    90,
+                    19,
+                    153,
+                    218,
+                    255,
+                    16,
+                    132,
+                    4,
+                    142,
+                    123,
+                    216,
+                    219,
+                    233,
+                    248,
+                    89
+                  ]
+                }
+              }
+            },
+            {
+              "name": "owner_yt",
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "account",
+                    "path": "owner"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "token_program"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "yield_token_mint"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    140,
+                    151,
+                    37,
+                    143,
+                    78,
+                    36,
+                    137,
+                    241,
+                    187,
+                    61,
+                    16,
+                    41,
+                    20,
+                    142,
+                    13,
+                    131,
+                    11,
+                    90,
+                    19,
+                    153,
+                    218,
+                    255,
+                    16,
+                    132,
+                    4,
+                    142,
+                    123,
+                    216,
+                    219,
+                    233,
+                    248,
+                    89
+                  ]
+                }
+              }
+            },
+            {
+              "name": "bond"
+            },
+            {
+              "name": "stake_pool",
+              "writable": true,
+              "relations": [
+                "bond"
+              ]
+            },
+            {
+              "name": "lst_vault",
+              "writable": true,
+              "relations": [
+                "bond"
+              ]
+            },
+            {
+              "name": "lst_mint",
+              "writable": true
+            },
+            {
+              "name": "principal_token_mint",
+              "writable": true,
+              "relations": [
+                "bond"
+              ]
+            },
+            {
+              "name": "yield_token_mint",
+              "writable": true,
+              "relations": [
+                "bond"
+              ]
+            },
+            {
+              "name": "global_settings"
+            },
+            {
+              "name": "protocol_fee_wallet",
+              "relations": [
+                "global_settings"
+              ]
+            },
+            {
+              "name": "fee_wallet_pt",
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "account",
+                    "path": "protocol_fee_wallet"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "token_program"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "principal_token_mint"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    140,
+                    151,
+                    37,
+                    143,
+                    78,
+                    36,
+                    137,
+                    241,
+                    187,
+                    61,
+                    16,
+                    41,
+                    20,
+                    142,
+                    13,
+                    131,
+                    11,
+                    90,
+                    19,
+                    153,
+                    218,
+                    255,
+                    16,
+                    132,
+                    4,
+                    142,
+                    123,
+                    216,
+                    219,
+                    233,
+                    248,
+                    89
+                  ]
+                }
+              }
+            },
+            {
+              "name": "fee_wallet_yt",
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "account",
+                    "path": "protocol_fee_wallet"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "token_program"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "yield_token_mint"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    140,
+                    151,
+                    37,
+                    143,
+                    78,
+                    36,
+                    137,
+                    241,
+                    187,
+                    61,
+                    16,
+                    41,
+                    20,
+                    142,
+                    13,
+                    131,
+                    11,
+                    90,
+                    19,
+                    153,
+                    218,
+                    255,
+                    16,
+                    132,
+                    4,
+                    142,
+                    123,
+                    216,
+                    219,
+                    233,
+                    248,
+                    89
+                  ]
+                }
+              }
+            },
+            {
+              "name": "associated_token_program",
+              "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+            },
+            {
+              "name": "token_program"
+            },
+            {
+              "name": "lst_token_program"
+            },
+            {
+              "name": "system_program",
+              "address": "11111111111111111111111111111111"
+            }
+          ]
+        },
+        {
+          "name": "stake_pool_program"
+        },
+        {
+          "name": "stake_pool_withdraw_authority"
+        },
+        {
+          "name": "reserve_stake_account",
+          "writable": true
+        },
+        {
+          "name": "manager_fee_account",
+          "writable": true
+        },
+        {
+          "name": "referrer_pool_tokens_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "deposit_shared.protocol_fee_wallet",
+                "account": "DepositShared"
+              },
+              {
+                "kind": "account",
+                "path": "deposit_shared.lst_token_program",
+                "account": "DepositShared"
+              },
+              {
+                "kind": "account",
+                "path": "deposit_shared.lst_mint",
+                "account": "DepositShared"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "DepositSolArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "deposit_sol_msol",
+      "docs": [
+        "For using SOL to deposit into an mSOL based LST Bond"
+      ],
+      "discriminator": [
+        242,
+        39,
+        244,
+        55,
+        142,
+        125,
+        252,
+        246
+      ],
+      "accounts": [
+        {
+          "name": "deposit_shared",
+          "accounts": [
+            {
+              "name": "owner",
+              "writable": true,
+              "signer": true
+            },
+            {
+              "name": "owner_pt",
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "account",
+                    "path": "owner"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "token_program"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "principal_token_mint"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    140,
+                    151,
+                    37,
+                    143,
+                    78,
+                    36,
+                    137,
+                    241,
+                    187,
+                    61,
+                    16,
+                    41,
+                    20,
+                    142,
+                    13,
+                    131,
+                    11,
+                    90,
+                    19,
+                    153,
+                    218,
+                    255,
+                    16,
+                    132,
+                    4,
+                    142,
+                    123,
+                    216,
+                    219,
+                    233,
+                    248,
+                    89
+                  ]
+                }
+              }
+            },
+            {
+              "name": "owner_yt",
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "account",
+                    "path": "owner"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "token_program"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "yield_token_mint"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    140,
+                    151,
+                    37,
+                    143,
+                    78,
+                    36,
+                    137,
+                    241,
+                    187,
+                    61,
+                    16,
+                    41,
+                    20,
+                    142,
+                    13,
+                    131,
+                    11,
+                    90,
+                    19,
+                    153,
+                    218,
+                    255,
+                    16,
+                    132,
+                    4,
+                    142,
+                    123,
+                    216,
+                    219,
+                    233,
+                    248,
+                    89
+                  ]
+                }
+              }
+            },
+            {
+              "name": "bond"
+            },
+            {
+              "name": "stake_pool",
+              "writable": true,
+              "relations": [
+                "bond"
+              ]
+            },
+            {
+              "name": "lst_vault",
+              "writable": true,
+              "relations": [
+                "bond"
+              ]
+            },
+            {
+              "name": "lst_mint",
+              "writable": true
+            },
+            {
+              "name": "principal_token_mint",
+              "writable": true,
+              "relations": [
+                "bond"
+              ]
+            },
+            {
+              "name": "yield_token_mint",
+              "writable": true,
+              "relations": [
+                "bond"
+              ]
+            },
+            {
+              "name": "global_settings"
+            },
+            {
+              "name": "protocol_fee_wallet",
+              "relations": [
+                "global_settings"
+              ]
+            },
+            {
+              "name": "fee_wallet_pt",
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "account",
+                    "path": "protocol_fee_wallet"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "token_program"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "principal_token_mint"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    140,
+                    151,
+                    37,
+                    143,
+                    78,
+                    36,
+                    137,
+                    241,
+                    187,
+                    61,
+                    16,
+                    41,
+                    20,
+                    142,
+                    13,
+                    131,
+                    11,
+                    90,
+                    19,
+                    153,
+                    218,
+                    255,
+                    16,
+                    132,
+                    4,
+                    142,
+                    123,
+                    216,
+                    219,
+                    233,
+                    248,
+                    89
+                  ]
+                }
+              }
+            },
+            {
+              "name": "fee_wallet_yt",
+              "writable": true,
+              "pda": {
+                "seeds": [
+                  {
+                    "kind": "account",
+                    "path": "protocol_fee_wallet"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "token_program"
+                  },
+                  {
+                    "kind": "account",
+                    "path": "yield_token_mint"
+                  }
+                ],
+                "program": {
+                  "kind": "const",
+                  "value": [
+                    140,
+                    151,
+                    37,
+                    143,
+                    78,
+                    36,
+                    137,
+                    241,
+                    187,
+                    61,
+                    16,
+                    41,
+                    20,
+                    142,
+                    13,
+                    131,
+                    11,
+                    90,
+                    19,
+                    153,
+                    218,
+                    255,
+                    16,
+                    132,
+                    4,
+                    142,
+                    123,
+                    216,
+                    219,
+                    233,
+                    248,
+                    89
+                  ]
+                }
+              }
+            },
+            {
+              "name": "associated_token_program",
+              "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+            },
+            {
+              "name": "token_program"
+            },
+            {
+              "name": "lst_token_program"
+            },
+            {
+              "name": "system_program",
+              "address": "11111111111111111111111111111111"
+            }
+          ]
+        },
+        {
+          "name": "liq_pool_sol_leg_pda",
+          "writable": true
+        },
+        {
+          "name": "liq_pool_msol_leg",
+          "writable": true
+        },
+        {
+          "name": "liq_pool_msol_leg_authority"
+        },
+        {
+          "name": "reserve_pda",
+          "writable": true
+        },
+        {
+          "name": "msol_mint_authority"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "marinade_program",
+          "address": "MarBmsSgKXdrN1egZf5sqe1TMai9K1rChYNDJgjq7aD"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "DepositSolMsolArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "initialize_global_settings",
+      "docs": [
+        "Initializes the GlobalSettings state with the passed keys and fee rates."
+      ],
+      "discriminator": [
+        167,
+        90,
+        127,
+        127,
+        179,
+        187,
+        232,
+        38
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_settings",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  115,
+                  101,
+                  116,
+                  116,
+                  105,
+                  110,
+                  103,
+                  115
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "InitGlobalSettingsArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "initialize_solo_validator_bond",
+      "docs": [
+        "This instruction is used to create a bond against a single validator node. All deposits",
+        "(whether SOL or stake accounts) will be delegated to this single validator."
+      ],
+      "discriminator": [
+        171,
+        24,
+        176,
+        195,
+        132,
+        8,
+        229,
+        222
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "issuer",
+          "signer": true
+        },
+        {
+          "name": "bond",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "validator_vote_account"
+              },
+              {
+                "kind": "arg",
+                "path": "args.issuance_ts"
+              },
+              {
+                "kind": "arg",
+                "path": "args.maturity_ts"
+              }
+            ]
+          }
+        },
+        {
+          "name": "validator_vote_account"
+        },
+        {
+          "name": "principal_token_mint",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  114,
+                  105,
+                  110,
+                  99,
+                  105,
+                  112,
+                  97,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond"
+              }
+            ]
+          }
+        },
+        {
+          "name": "principal_token_metadata",
+          "writable": true
+        },
+        {
+          "name": "yield_token_mint",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  121,
+                  105,
+                  101,
+                  108,
+                  100
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond"
+              }
+            ]
+          }
+        },
+        {
+          "name": "yield_token_metadata",
+          "writable": true
+        },
+        {
+          "name": "metadata_program",
+          "address": "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s"
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "InitializeSoloValidatorBondArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "initialize_stake_pool_bond",
+      "docs": [
+        "Initializes a new StakePoolBond given the stake pool, issuance timestamp, maturity",
+        "timestamp, and PT and YT metadata."
+      ],
+      "discriminator": [
+        86,
+        2,
+        17,
+        85,
+        239,
+        149,
+        152,
+        233
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "issuer",
+          "signer": true
+        },
+        {
+          "name": "bond",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "stake_pool"
+              },
+              {
+                "kind": "arg",
+                "path": "args.issuance_ts"
+              },
+              {
+                "kind": "arg",
+                "path": "args.maturity_ts"
+              }
+            ]
+          }
+        },
+        {
+          "name": "stake_pool"
+        },
+        {
+          "name": "lst_program"
+        },
+        {
+          "name": "lst_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "bond"
+              },
+              {
+                "kind": "account",
+                "path": "lst_token_program"
+              },
+              {
+                "kind": "account",
+                "path": "lst_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "lst_mint"
+        },
+        {
+          "name": "principal_token_mint",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  114,
+                  105,
+                  110,
+                  99,
+                  105,
+                  112,
+                  97,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond"
+              }
+            ]
+          }
+        },
+        {
+          "name": "principal_token_metadata",
+          "writable": true
+        },
+        {
+          "name": "yield_token_mint",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  121,
+                  105,
+                  101,
+                  108,
+                  100
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond"
+              }
+            ]
+          }
+        },
+        {
+          "name": "yield_token_metadata",
+          "writable": true
+        },
+        {
+          "name": "metadata_program",
+          "address": "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s"
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "lst_token_program"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "InitializeStakePoolBondArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "lst_bond_handle_maturity",
+      "discriminator": [
+        247,
+        188,
+        70,
+        119,
+        85,
+        138,
+        212,
+        219
+      ],
+      "accounts": [
+        {
+          "name": "bond",
+          "writable": true
+        },
+        {
+          "name": "principal_token_mint",
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "yield_token_mint",
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "lst_vault",
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "stake_pool",
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "lst_mint"
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "lst_token_program"
+        },
+        {
+          "name": "global_settings"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "native_transfer",
+      "discriminator": [
+        73,
+        209,
+        138,
+        99,
+        122,
+        188,
+        142,
+        41
+      ],
+      "accounts": [
+        {
+          "name": "from",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "to",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "NativeTransferArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "redeem_pt",
+      "discriminator": [
+        249,
+        183,
+        230,
+        236,
+        7,
+        233,
+        13,
+        212
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "signer": true
+        },
+        {
+          "name": "owner_pt_account",
+          "writable": true
+        },
+        {
+          "name": "owner_lst_account",
+          "writable": true
+        },
+        {
+          "name": "bond"
+        },
+        {
+          "name": "principal_token_mint",
+          "writable": true,
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "lst_vault",
+          "writable": true,
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "lst_mint"
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "lst_token_program"
+        },
+        {
+          "name": "global_settings"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "RedeemPtArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "redeem_yt",
+      "discriminator": [
+        1,
+        74,
+        100,
+        10,
+        218,
+        215,
+        221,
+        161
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "signer": true
+        },
+        {
+          "name": "owner_yt_account",
+          "writable": true
+        },
+        {
+          "name": "owner_lst_account",
+          "writable": true
+        },
+        {
+          "name": "bond"
+        },
+        {
+          "name": "yield_token_mint",
+          "writable": true,
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "lst_vault",
+          "writable": true,
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "lst_mint"
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "lst_token_program"
+        },
+        {
+          "name": "global_settings"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "RedeemYtArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "solo_validator_delegate_tips",
+      "discriminator": [
+        148,
+        200,
+        124,
+        170,
+        5,
+        96,
+        231,
+        139
+      ],
+      "accounts": [
+        {
+          "name": "bond",
+          "writable": true
+        },
+        {
+          "name": "validator_vote_account",
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "stake_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  116,
+                  97,
+                  107,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond"
+              }
+            ]
+          },
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "clock",
+          "address": "SysvarC1ock11111111111111111111111111111111"
+        },
+        {
+          "name": "stake_program",
+          "address": "Stake11111111111111111111111111111111111111"
+        },
+        {
+          "name": "stake_history",
+          "address": "SysvarStakeHistory1111111111111111111111111"
+        },
+        {
+          "name": "stake_config",
+          "address": "StakeConfig11111111111111111111111111111111"
+        },
+        {
+          "name": "global_settings"
+        },
+        {
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "solo_validator_deposit_sol",
+      "docs": [
+        "For using a Stake account to deposit into a Solo Validator Bond"
+      ],
+      "discriminator": [
+        253,
+        10,
+        62,
+        175,
+        159,
+        90,
+        55,
+        142
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "owner_pt",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "owner"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "principal_token_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "owner_yt",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "owner"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "yield_token_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "bond",
+          "writable": true
+        },
+        {
+          "name": "validator_vote_account",
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "stake_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  116,
+                  97,
+                  107,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bond"
+              }
+            ]
+          }
+        },
+        {
+          "name": "principal_token_mint",
+          "writable": true,
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "yield_token_mint",
+          "writable": true,
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "global_settings"
+        },
+        {
+          "name": "protocol_fee_wallet",
+          "writable": true,
+          "relations": [
+            "global_settings"
+          ]
+        },
+        {
+          "name": "fee_wallet_pt",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "protocol_fee_wallet"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "principal_token_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "fee_wallet_yt",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "protocol_fee_wallet"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "yield_token_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "clock",
+          "address": "SysvarC1ock11111111111111111111111111111111"
+        },
+        {
+          "name": "stake_program",
+          "address": "Stake11111111111111111111111111111111111111"
+        },
+        {
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
+        },
+        {
+          "name": "stake_history",
+          "address": "SysvarStakeHistory1111111111111111111111111"
+        },
+        {
+          "name": "stake_config",
+          "address": "StakeConfig11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "SoloValidatorDepositSolArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "solo_validator_deposit_stake",
+      "docs": [
+        "For using a Stake account to deposit into a SoloValidatorBond",
+        "There is a current deposit minimum of 1 SOL"
+      ],
+      "discriminator": [
+        21,
+        14,
+        117,
+        220,
+        1,
+        60,
+        23,
+        13
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "owner_stake_account",
+          "writable": true
+        },
+        {
+          "name": "owner_pt",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "owner"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "principal_token_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "owner_yt",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "owner"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "yield_token_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "bond"
+        },
+        {
+          "name": "validator_vote_account",
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "stake_account",
+          "writable": true,
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "principal_token_mint",
+          "writable": true,
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "yield_token_mint",
+          "writable": true,
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "global_settings"
+        },
+        {
+          "name": "protocol_fee_wallet",
+          "relations": [
+            "global_settings"
+          ]
+        },
+        {
+          "name": "fee_wallet_pt",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "protocol_fee_wallet"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "principal_token_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "fee_wallet_yt",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "protocol_fee_wallet"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "yield_token_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "clock",
+          "address": "SysvarC1ock11111111111111111111111111111111"
+        },
+        {
+          "name": "stake_program",
+          "address": "Stake11111111111111111111111111111111111111"
+        },
+        {
+          "name": "stake_history",
+          "address": "SysvarStakeHistory1111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "SoloValidatorDepositStakeArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "solo_validator_handle_maturity",
+      "docs": [
+        "Must be called after a SoloValidatorBond has matured and before anyone can redeem their",
+        "PRs or YTs.",
+        "This instruciton makes sure the transient stake account has been merged, if needed"
+      ],
+      "discriminator": [
+        127,
+        154,
+        109,
+        164,
+        119,
+        21,
+        34,
+        149
+      ],
+      "accounts": [
+        {
+          "name": "bond",
+          "writable": true
+        },
+        {
+          "name": "stake_account",
+          "writable": true,
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "transient_stake_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "principal_token_mint",
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "yield_token_mint",
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "clock",
+          "address": "SysvarC1ock11111111111111111111111111111111"
+        },
+        {
+          "name": "stake_program",
+          "address": "Stake11111111111111111111111111111111111111"
+        },
+        {
+          "name": "stake_history",
+          "address": "SysvarStakeHistory1111111111111111111111111"
+        },
+        {
+          "name": "global_settings"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "solo_validator_redeem_pt_for_sol",
+      "discriminator": [
+        219,
+        249,
+        186,
+        69,
+        107,
+        27,
+        53,
+        168
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "signer": true
+        },
+        {
+          "name": "owner_pt_account",
+          "writable": true
+        },
+        {
+          "name": "bond",
+          "writable": true
+        },
+        {
+          "name": "stake_account",
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "principal_token_mint",
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "global_settings"
+        },
+        {
+          "name": "global_counter_party",
+          "writable": true,
+          "relations": [
+            "global_settings"
+          ]
+        },
+        {
+          "name": "counter_party_pt",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "global_counter_party"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "principal_token_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "SoloValidatorRedeemPtForSolArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "solo_validator_redeem_pt_for_stake",
+      "discriminator": [
+        131,
+        241,
+        170,
+        225,
+        20,
+        53,
+        106,
+        95
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "owner_stake_account",
+          "docs": [
+            "Empty account where a new stake account will be created"
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "owner_pt_account",
+          "writable": true
+        },
+        {
+          "name": "bond",
+          "writable": true
+        },
+        {
+          "name": "stake_account",
+          "writable": true,
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "principal_token_mint",
+          "writable": true,
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "clock",
+          "address": "SysvarC1ock11111111111111111111111111111111"
+        },
+        {
+          "name": "stake_program",
+          "address": "Stake11111111111111111111111111111111111111"
+        },
+        {
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
+        },
+        {
+          "name": "stake_history",
+          "address": "SysvarStakeHistory1111111111111111111111111"
+        },
+        {
+          "name": "global_settings"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "SoloValidatorRedeemPtForStakeArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "solo_validator_redeem_yt_for_sol",
+      "discriminator": [
+        53,
+        172,
+        132,
+        57,
+        138,
+        86,
+        154,
+        69
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "signer": true
+        },
+        {
+          "name": "owner_yt_account",
+          "writable": true
+        },
+        {
+          "name": "bond",
+          "writable": true
+        },
+        {
+          "name": "stake_account",
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "yield_token_mint",
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "principal_token_mint",
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "global_settings"
+        },
+        {
+          "name": "global_counter_party",
+          "writable": true,
+          "relations": [
+            "global_settings"
+          ]
+        },
+        {
+          "name": "counter_party_yt",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "global_counter_party"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "yield_token_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "SoloValidatorRedeemYtForSolArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "solo_validator_redeem_yt_for_stake",
+      "discriminator": [
+        143,
+        45,
+        75,
+        247,
+        229,
+        60,
+        80,
+        179
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "signer": true
+        },
+        {
+          "name": "owner_stake_account",
+          "docs": [
+            "Empty account where a new stake account will be created"
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "owner_yt_account",
+          "writable": true
+        },
+        {
+          "name": "bond",
+          "writable": true
+        },
+        {
+          "name": "stake_account",
+          "writable": true,
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "yield_token_mint",
+          "writable": true,
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "principal_token_mint",
+          "relations": [
+            "bond"
+          ]
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "clock",
+          "address": "SysvarC1ock11111111111111111111111111111111"
+        },
+        {
+          "name": "stake_program",
+          "address": "Stake11111111111111111111111111111111111111"
+        },
+        {
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
+        },
+        {
+          "name": "stake_history",
+          "address": "SysvarStakeHistory1111111111111111111111111"
+        },
+        {
+          "name": "global_settings"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "SoloValidatorRedeemYtForStakeArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "update_fee_settings",
+      "docs": [
+        "Updates the fee portions of the GlobalSettings",
+        "requires globalAdmin authority"
+      ],
+      "discriminator": [
+        155,
+        121,
+        178,
+        253,
+        181,
+        139,
+        103,
+        177
+      ],
+      "accounts": [
+        {
+          "name": "global_admin",
+          "signer": true,
+          "relations": [
+            "global_settings"
+          ]
+        },
+        {
+          "name": "global_settings",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "UpdateFeeSettingsArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "update_halt_admin",
+      "docs": [
+        "Updates the halt admin on GlobalSettings",
+        "requires globalAdmin authority"
+      ],
+      "discriminator": [
+        153,
+        199,
+        120,
+        30,
+        165,
+        177,
+        148,
+        154
+      ],
+      "accounts": [
+        {
+          "name": "global_admin",
+          "signer": true,
+          "relations": [
+            "global_settings"
+          ]
+        },
+        {
+          "name": "global_settings",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "UpdateHaltAdminArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "update_halt_status",
+      "docs": [
+        "Updates the halt status on GlobalSettings",
+        "requires haltAdmin authority"
+      ],
+      "discriminator": [
+        227,
+        136,
+        126,
+        132,
+        144,
+        169,
+        142,
+        92
+      ],
+      "accounts": [
+        {
+          "name": "halt_admin",
+          "signer": true,
+          "relations": [
+            "global_settings"
+          ]
+        },
+        {
+          "name": "global_settings",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "UpdateHaltStatusArgs"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "GlobalSettings",
+      "discriminator": [
+        109,
+        67,
+        50,
+        55,
+        2,
+        20,
+        148,
+        62
+      ]
+    },
+    {
+      "name": "LstBond",
+      "discriminator": [
+        146,
+        5,
+        23,
+        96,
+        161,
+        185,
+        30,
+        243
+      ]
+    },
+    {
+      "name": "SoloValidatorBond",
+      "discriminator": [
+        178,
+        232,
+        232,
+        66,
+        149,
+        243,
+        39,
+        168
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "Deposit",
+      "discriminator": [
+        62,
+        205,
+        242,
+        175,
+        244,
+        169,
+        136,
+        52
+      ]
+    },
+    {
+      "name": "LstBondCreated",
+      "discriminator": [
+        191,
+        111,
+        174,
+        194,
+        76,
+        124,
+        216,
+        235
+      ]
+    },
+    {
+      "name": "PtRedemption",
+      "discriminator": [
+        137,
+        147,
+        145,
+        235,
+        208,
+        135,
+        191,
+        142
+      ]
+    },
+    {
+      "name": "SolDeposit",
+      "discriminator": [
+        175,
+        147,
+        63,
+        27,
+        206,
+        13,
+        62,
+        187
+      ]
+    },
+    {
+      "name": "SoloValidatorBondCreated",
+      "discriminator": [
+        69,
+        45,
+        161,
+        220,
+        171,
+        34,
+        243,
+        10
+      ]
+    },
+    {
+      "name": "StakeDeposit",
+      "discriminator": [
+        23,
+        84,
+        73,
+        101,
+        57,
+        202,
+        103,
+        165
+      ]
+    },
+    {
+      "name": "YtRedemption",
+      "discriminator": [
+        179,
+        40,
+        62,
+        206,
+        137,
+        74,
+        61,
+        14
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "InvalidStakePool",
+      "msg": "Invalid StakePool"
+    },
+    {
+      "code": 6001,
+      "name": "InvalidOwner",
+      "msg": "Invalid owner"
+    },
+    {
+      "code": 6002,
+      "name": "BondAlreadyMatured",
+      "msg": "Bond has matured"
+    },
+    {
+      "code": 6003,
+      "name": "IncorrectFeeOwner",
+      "msg": "Incorrect fee owner"
+    },
+    {
+      "code": 6004,
+      "name": "BondNotMature",
+      "msg": "Bond hasn't matured"
+    },
+    {
+      "code": 6005,
+      "name": "NoteActiveVoteAccount",
+      "msg": "Not active vote account"
+    },
+    {
+      "code": 6006,
+      "name": "PastMaturity",
+      "msg": "Maturity in the past"
+    },
+    {
+      "code": 6007,
+      "name": "UnknownStakeError",
+      "msg": "UnknownStakeError"
+    },
+    {
+      "code": 6008,
+      "name": "InsufficientBalanceAfterWithdrawal",
+      "msg": "Insufficient balance after withdrawal"
+    },
+    {
+      "code": 6009,
+      "name": "FeeExceedsMax",
+      "msg": "Fee exceeds max"
+    },
+    {
+      "code": 6010,
+      "name": "MismatchedStakeState",
+      "msg": ""
+    },
+    {
+      "code": 6011,
+      "name": "UnsupportedStakeState",
+      "msg": ""
+    },
+    {
+      "code": 6012,
+      "name": "BelowMinimum",
+      "msg": ""
+    },
+    {
+      "code": 6013,
+      "name": "BondMaturityNotHandled",
+      "msg": ""
+    },
+    {
+      "code": 6014,
+      "name": "BelowMinimumUseRedeemSol",
+      "msg": ""
+    },
+    {
+      "code": 6015,
+      "name": "AboveMaximumUseRedeemStake",
+      "msg": ""
+    },
+    {
+      "code": 6016,
+      "name": "IncorrectCounterParty",
+      "msg": ""
+    },
+    {
+      "code": 6017,
+      "name": "NotEnoughLiquidReserve",
+      "msg": ""
+    },
+    {
+      "code": 6018,
+      "name": "ArithmeticOverflow",
+      "msg": ""
+    },
+    {
+      "code": 6019,
+      "name": "SysvarUnavailable",
+      "msg": ""
+    },
+    {
+      "code": 6020,
+      "name": "BadIssuanceDate",
+      "msg": ""
+    },
+    {
+      "code": 6021,
+      "name": "IncorrectVoteOwner",
+      "msg": ""
+    },
+    {
+      "code": 6022,
+      "name": "BadSettings",
+      "msg": ""
+    },
+    {
+      "code": 6023,
+      "name": "InvalidTransientStakeAccount",
+      "msg": ""
+    },
+    {
+      "code": 6024,
+      "name": "NewTransientStakeAccountRequired",
+      "msg": ""
+    },
+    {
+      "code": 6025,
+      "name": "InvalideLstMint",
+      "msg": ""
+    },
+    {
+      "code": 6026,
+      "name": "NotRentExempt",
+      "msg": ""
+    },
+    {
+      "code": 6027,
+      "name": "BadIssuanceCloseDate",
+      "msg": ""
+    },
+    {
+      "code": 6028,
+      "name": "IssuanceClosed",
+      "msg": ""
+    },
+    {
+      "code": 6029,
+      "name": "BadInputValue",
+      "msg": ""
+    },
+    {
+      "code": 6030,
+      "name": "BadHaltStatus",
+      "msg": ""
+    },
+    {
+      "code": 6031,
+      "name": "InstructionHalted",
+      "msg": ""
+    },
+    {
+      "code": 6032,
+      "name": "IssuanceNotStarted",
+      "msg": ""
+    },
+    {
+      "code": 6033,
+      "name": "WrongDepositor",
+      "msg": ""
+    }
+  ],
+  "types": [
+    {
+      "name": "CounterPartyRedeemPtArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CounterPartyRedeemYtArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CounterPartyWithdrawSolArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Deposit",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "bond",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "DepositArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "DepositSolArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "DepositSolMsolArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "GlobalSettings",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "global_admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "protocol_fee_wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "global_counter_party",
+            "type": "pubkey"
+          },
+          {
+            "name": "counter_party_bump",
+            "type": "u8"
+          },
+          {
+            "name": "deposit_fee_bps",
+            "type": "u16"
+          },
+          {
+            "name": "counter_party_fee_bps",
+            "type": "u16"
+          },
+          {
+            "name": "halt_admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "halt_status",
+            "type": "u64"
+          },
+          {
+            "name": "reserve",
+            "type": {
+              "array": [
+                "u8",
+                216
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "InitGlobalSettingsArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "global_admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "fee_wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "deposit_fee_bps",
+            "type": "u16"
+          },
+          {
+            "name": "counter_party_fee_bps",
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "InitializeSoloValidatorBondArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "issuance_ts",
+            "type": "i64"
+          },
+          {
+            "name": "maturity_ts",
+            "type": "i64"
+          },
+          {
+            "name": "principal_metadata_args",
+            "type": {
+              "defined": {
+                "name": "MetadataArgs"
+              }
+            }
+          },
+          {
+            "name": "yield_metadata_args",
+            "type": {
+              "defined": {
+                "name": "MetadataArgs"
+              }
+            }
+          },
+          {
+            "name": "issuance_close_ts",
+            "type": "i64"
+          },
+          {
+            "name": "reward_commissions",
+            "type": {
+              "defined": {
+                "name": "RewardCommissions"
+              }
+            }
+          },
+          {
+            "name": "single_depositor",
+            "type": {
+              "option": "pubkey"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "InitializeStakePoolBondArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "issuance_ts",
+            "type": "i64"
+          },
+          {
+            "name": "maturity_ts",
+            "type": "i64"
+          },
+          {
+            "name": "principal_metadata_args",
+            "type": {
+              "defined": {
+                "name": "MetadataArgs"
+              }
+            }
+          },
+          {
+            "name": "yield_metadata_args",
+            "type": {
+              "defined": {
+                "name": "MetadataArgs"
+              }
+            }
+          },
+          {
+            "name": "issuance_close_ts",
+            "type": "i64"
+          },
+          {
+            "name": "reward_commissions",
+            "type": {
+              "defined": {
+                "name": "RewardCommissions"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "LstBond",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "stake_pool",
+            "docs": [
+              "The stake_pool acount on the StakePool program or State account on the mSOL account"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "lst_vault",
+            "docs": [
+              "The token account that holds the deposited / staked LSTs"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "lst_program",
+            "docs": [
+              "deployed SPL StakePool or mSOL program for the given LST"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "issuance_ts",
+            "docs": [
+              "Unix timestamp for the bond's issuance date"
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "maturity_ts",
+            "docs": [
+              "Unix timestamp for the bond's maturity"
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "principal_token_mint",
+            "docs": [
+              "The address of the Mint account for the principal tokens"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "yield_token_mint",
+            "docs": [
+              "The address of the Mint account for the yield tokens"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "bump_seed",
+            "docs": [
+              "Bump seed for the Bond's PDA"
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "redemption_cache",
+            "type": {
+              "defined": {
+                "name": "RedemptionCache"
+              }
+            }
+          },
+          {
+            "name": "maturity_handled",
+            "docs": [
+              "Flag for whether or not maturity was handled"
+            ],
+            "type": "bool"
+          },
+          {
+            "name": "issuance_close_ts",
+            "docs": [
+              "Unix timestamp for the bond's closing date for new deposits.",
+              "No closing time will be enforced if value is 0."
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "reward_commissions",
+            "docs": [
+              "Commission fees taken on staking rewards by issuer."
+            ],
+            "type": {
+              "defined": {
+                "name": "RewardCommissions"
+              }
+            }
+          },
+          {
+            "name": "issuer",
+            "docs": [
+              "The public key used to identify the issuer."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "reserve",
+            "type": {
+              "array": [
+                "u8",
+                207
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "LstBondCreated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "creator",
+            "type": "pubkey"
+          },
+          {
+            "name": "bond",
+            "type": "pubkey"
+          },
+          {
+            "name": "lst_mint",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MetadataArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "type": "string"
+          },
+          {
+            "name": "uri",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "NativeTransferArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PtRedemption",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "bond",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RedeemPtArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RedeemYtArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RedemptionCache",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "lst_for_all_pt_at_redemption",
+            "docs": [
+              "The amount of LST bucketed for all PT"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "bond_lst_bal_at_first_redemption",
+            "docs": [
+              "The amount of LSTs the bond vault had at first redemption"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "pt_supply_at_first_redemption",
+            "docs": [
+              "The total supply of PT at the first redemption"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "yt_supply_at_first_redemption",
+            "docs": [
+              "The total supply of YT at the first redemption"
+            ],
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RewardCommissions",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "inflation_bps",
+            "type": "u16"
+          },
+          {
+            "name": "mev_tips_bps",
+            "type": "u16"
+          },
+          {
+            "name": "block_rewards_bps",
+            "type": "u16"
+          },
+          {
+            "name": "padding",
+            "type": {
+              "array": [
+                "u8",
+                2
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "SolDeposit",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "bond",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "lst_received",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SoloValidatorBond",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "validator_vote_account",
+            "docs": [
+              "The validator's vote account key"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "stake_account",
+            "docs": [
+              "The stake account owned by this bond"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "transient_stake_account",
+            "docs": [
+              "The transient stake account owned by this bond"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "issuance_ts",
+            "docs": [
+              "Unix timestamp for the bond's issuance date"
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "maturity_ts",
+            "docs": [
+              "Unix timestamp for the bond's maturity"
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "principal_token_mint",
+            "docs": [
+              "The address of the Mint account for the principal tokens"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "yield_token_mint",
+            "docs": [
+              "The address of the Mint account for the yield tokens"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "bump_seed",
+            "docs": [
+              "Bump seed for the Bond's PDA"
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "maturity_handled",
+            "docs": [
+              "A flag to determine if the handle_maturity instruction has been called.",
+              "This must be true for PTs and YTs to be redeemed"
+            ],
+            "type": "bool"
+          },
+          {
+            "name": "completely_unstaked",
+            "docs": [
+              "A flag that's true if the stake_account has been completely unstaked. This is necessary",
+              "to mitigate an [extreme edge case where an] adversary could hijack the stake account",
+              "authorities and brick the last SOL redemptions."
+            ],
+            "type": "bool"
+          },
+          {
+            "name": "stake_withdrawn",
+            "docs": [
+              "A flag to indicate when the stake_account has been withdrawn and should never be trusted",
+              "again"
+            ],
+            "type": "bool"
+          },
+          {
+            "name": "_padding",
+            "type": {
+              "array": [
+                "u8",
+                4
+              ]
+            }
+          },
+          {
+            "name": "transient_lamports",
+            "docs": [
+              "A value that gets incremented or decremented as transient stake is being moved. This",
+              "is an important accounting measure to mitigate the affects of an adversary hijacking",
+              "the transient_stake_account authorities, inflating the lamports on the account, and",
+              "withdrawing more from their YTs than they should."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "redemption_cache",
+            "docs": [
+              "Redemption cache used to calculate PT and YT exchange rates"
+            ],
+            "type": {
+              "defined": {
+                "name": "SoloValidatorRedemptionCache"
+              }
+            }
+          },
+          {
+            "name": "issuance_close_ts",
+            "docs": [
+              "Unix timestamp for the bond's closing date for new issuance.",
+              "No closing time will be enforced if value is 0."
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "reward_commissions",
+            "docs": [
+              "Commission fees taken on staking rewards by issuer."
+            ],
+            "type": {
+              "defined": {
+                "name": "RewardCommissions"
+              }
+            }
+          },
+          {
+            "name": "issuer",
+            "docs": [
+              "The public key used to identify the issuer."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "single_depositor",
+            "docs": [
+              "The only user allowed to deposit to bond if value is set."
+            ],
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "reserve",
+            "type": {
+              "array": [
+                "u8",
+                143
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "SoloValidatorBondCreated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "creator",
+            "type": "pubkey"
+          },
+          {
+            "name": "bond",
+            "type": "pubkey"
+          },
+          {
+            "name": "vote_account",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SoloValidatorDepositSolArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SoloValidatorDepositStakeArgs",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
+      "name": "SoloValidatorRedeemPtForSolArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SoloValidatorRedeemPtForStakeArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SoloValidatorRedeemYtForSolArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SoloValidatorRedeemYtForStakeArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SoloValidatorRedemptionCache",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "lamports_for_pts",
+            "type": "u64"
+          },
+          {
+            "name": "lamports_for_yts",
+            "type": "u64"
+          },
+          {
+            "name": "was_slashed",
+            "type": "bool"
+          },
+          {
+            "name": "padding",
+            "type": {
+              "array": [
+                "u8",
+                7
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "StakeDeposit",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "bond",
+            "type": "pubkey"
+          },
+          {
+            "name": "stake_account",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UpdateFeeSettingsArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "global_admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "fee_wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "deposit_fee_bps",
+            "type": "u16"
+          },
+          {
+            "name": "counter_party_fee_bps",
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UpdateHaltAdminArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "halt_admin",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UpdateHaltStatusArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "halt_status",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "YtRedemption",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "bond",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    }
+  ]
+}
