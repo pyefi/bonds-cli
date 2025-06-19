@@ -69,6 +69,8 @@ pub async fn fetch_and_filter_mev_data(
     filter_mev_data(response, vote_pubkey)
 }
 
+// REVIEW: When does MEV epoch data get uploaded to the API? If operators are waiting for epoch 
+// transition, there could be a race condition for MEV epoch data
 pub async fn fetch_mev_data(target_epoch: u64) -> Result<ValidatorsResponse> {
     let http = Client::new();
 

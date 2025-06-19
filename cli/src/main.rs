@@ -23,19 +23,19 @@ enum Commands {
     /// Transfer excess rewards collected for the last completed epoch to SoloValiatorBond.
     TransferExcessRewards {
         /// RPC Endpoint
-        #[arg(short, long, default_value = "https://api.mainnet-beta.solana.com")]
+        #[arg(short, long, env, default_value = "https://api.mainnet-beta.solana.com")]
         rpc: String,
         /// Path to payer keypair
-        #[arg(short, long)]
+        #[arg(short, long, env)]
         payer: String,
         /// SoloValidatorBond's pubkey
-        #[arg(short, long)]
+        #[arg(short, long, env)]
         bond: String,
         /// Maximum RPC requests to send concurrently.
-        #[arg(long, default_value = "50")]
+        #[arg(long, env, default_value = "50")]
         concurrency: usize,
         /// Dry mode to calculate excess rewards without transferring.
-        #[arg(long)]
+        #[arg(long, env)]
         dry_run: bool,
     },
 

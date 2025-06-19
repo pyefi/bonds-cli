@@ -39,6 +39,8 @@ pub async fn transfer_excess_rewards_with_delegate_tips(
     let client =
         Client::new_with_options(cluster, Arc::clone(&payer), CommitmentConfig::processed());
 
+    // TODO: check balance and send notification if not enough balance
+
     let program = client.program(PYE_BONDS_ID)?;
     let (recent_blockhash, _last_valid_block_height) = program
         .rpc()

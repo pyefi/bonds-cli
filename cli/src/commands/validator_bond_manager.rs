@@ -21,7 +21,7 @@ use crate::{
 #[derive(Clone, Debug, Parser)]
 pub struct ValidatorBondManagerArgs {
     /// RPC Endpoint
-    #[arg(short, long, default_value = "https://api.mainnet-beta.solana.com")]
+    #[arg(short, long, env, default_value = "https://api.mainnet-beta.solana.com")]
     rpc: String,
     /// The Pye program ID
     #[arg(
@@ -31,16 +31,16 @@ pub struct ValidatorBondManagerArgs {
     )]
     program_id: Pubkey,
     /// Validator's vote accoutn
-    #[arg(short, long)]
+    #[arg(short, long, env)]
     vote_pubkey: Pubkey,
     /// Path to payer keypair
-    #[arg(short, long)]
+    #[arg(short, long, env)]
     payer: String,
     /// Maximum RPC requests to send concurrently.
-    #[arg(long, default_value = "50")]
+    #[arg(long, env, default_value = "50")]
     concurrency: usize,
     /// Dry mode to calculate excess rewards without transferring.
-    #[arg(long)]
+    #[arg(long, env)]
     dry_run: bool,
 }
 
@@ -153,6 +153,7 @@ pub async fn handle_validator_bond_manager(args: ValidatorBondManagerArgs) -> Re
 
             // TODO: Make the actual SOL transfer if not a dry run
             if !args.dry_run {
+                // transfer_excess_rewards_with_delegate_tips
                 todo!("Make the actual SOL transfer");
             }
         }
