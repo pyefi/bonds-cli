@@ -62,7 +62,7 @@ pye-cli transfer-excess-rewards \
 There are several ways to read the metrics logged. For instance, we can use the InfluxDB CLI:
 
 1. Get container id using `docker ps`, e.g. `pye-program-library-influxdb-1`
-2. Connect to InfluxDB container with `docker exec -it pye-program-library-influxdb-1 influx`.
+2. Connect to InfluxDB container with `docker exec -it bonds-cli-influxdb-1 influx`.
 3. Run the following
 
 ```

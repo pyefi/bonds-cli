@@ -8,6 +8,7 @@ use crate::transactions::transfer_excess_rewards_with_delegate_tips;
 use anchor_client::Cluster;
 use anyhow::{anyhow, Result};
 use dialoguer::Confirm;
+use log::info;
 use solana_client::nonblocking::rpc_client::RpcClient;
 use solana_metrics::{datapoint_info, flush};
 use solana_sdk::{commitment_config::CommitmentConfig, pubkey::Pubkey};
@@ -27,9 +28,8 @@ pub async fn handle_transfer_excess_rewards(args: TransferExcessRewardsArgs) -> 
 
     // Fetch RewardCommissions configured on SoloValidatorBond.
     let bond = fetch_solo_validator_bond(&client, &bond_pubkey).await?;
-
     let reward_commissions = bond.reward_commissions.clone();
-    println!("\nCurrent {:?}", reward_commissions);
+    info!("Current: {:?}", reward_commissions);
 
     // Fetch the current Solana Network epoch.
     let epoch_info = client.get_epoch_info().await?;
