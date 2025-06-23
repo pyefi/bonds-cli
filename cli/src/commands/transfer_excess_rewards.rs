@@ -4,7 +4,7 @@ use crate::metrics_helpers::*;
 use crate::rewards::block_rewards::calculate_excess_block_reward;
 use crate::rewards::inflation_rewards::calculate_excess_inflation_reward;
 use crate::rewards::mev_rewards::{calculate_excess_mev_reward, fetch_and_filter_mev_data};
-use crate::transactions::transfer_excess_rewards_with_delegate_tips;
+use crate::transactions::transfer_excess_rewards;
 use anchor_client::Cluster;
 use anyhow::{anyhow, Result};
 use dialoguer::Confirm;
@@ -118,7 +118,7 @@ pub async fn handle_transfer_excess_rewards(args: TransferExcessRewardsArgs) -> 
         .interact()?
     {
         let cluster = Cluster::Custom(args.rpc.clone(), args.rpc.replace("http", "ws"));
-        transfer_excess_rewards_with_delegate_tips(
+        transfer_excess_rewards(
             args.payer_file_path,
             cluster,
             &bond_pubkey,
