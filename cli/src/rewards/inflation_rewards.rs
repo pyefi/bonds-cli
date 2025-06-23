@@ -49,7 +49,7 @@ async fn get_excess_inflation_reward(
         );
         Ok(excess)
     } else {
-        // This is the case for stake accounts that are activating 
+        // This is the case for stake accounts that are activating
         return Ok(0);
     }
 }
@@ -71,7 +71,7 @@ pub async fn calculate_excess_inflation_reward(
             }
             Err(e) => {
                 error!("Error for stake account: {}", e);
-                0 // Return 0 for stake account on error. 
+                0 // Return 0 for stake account on error.
             }
         };
 

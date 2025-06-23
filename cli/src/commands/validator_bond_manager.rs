@@ -21,7 +21,12 @@ use crate::{
 #[derive(Clone, Debug, Parser)]
 pub struct ValidatorBondManagerArgs {
     /// RPC Endpoint
-    #[arg(short, long, env, default_value = "https://api.mainnet-beta.solana.com")]
+    #[arg(
+        short,
+        long,
+        env,
+        default_value = "https://api.mainnet-beta.solana.com"
+    )]
     rpc: String,
     /// The Pye program ID
     #[arg(

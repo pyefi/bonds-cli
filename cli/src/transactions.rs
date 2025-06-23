@@ -1,8 +1,8 @@
 use anchor_client::solana_sdk::instruction::AccountMeta;
 use anchor_client::{Client, Cluster};
 use anyhow::{anyhow, Result};
-use pye_core_cpi::pye_core::client::accounts::SoloValidatorDelegateTips;
 use pye_core_cpi::pye_core::accounts::SoloValidatorBond;
+use pye_core_cpi::pye_core::client::accounts::SoloValidatorDelegateTips;
 use pye_core_cpi::pye_core::ID as PYE_BONDS_ID;
 use solana_sdk::signature::Keypair;
 use solana_sdk::signer::keypair::read_keypair_file;
