@@ -48,6 +48,7 @@ pub async fn handle_transfer_excess_rewards(args: TransferExcessRewardsArgs) -> 
         &bond.stake_account,
         &bond.transient_stake_account,
         target_epoch,
+        current_epoch,
     )
     .await?;
 

@@ -1,3 +1,4 @@
+use anchor_client::Cluster;
 use anyhow::{anyhow, Result};
 use clap::Parser;
 use log::info;
@@ -16,6 +17,7 @@ use crate::{
         mev_rewards::{calculate_excess_mev_reward, fetch_and_filter_mev_data},
     },
     rpc_utils::wait_for_next_epoch,
+    transactions::transfer_excess_rewards,
 };
 
 #[derive(Clone, Debug, Parser)]
@@ -113,6 +115,7 @@ pub async fn handle_validator_bond_manager(args: ValidatorBondManagerArgs) -> Re
                 &bond.stake_account,
                 &bond.transient_stake_account,
                 target_epoch,
+                current_epoch_info.epoch,
             )
             .await?;
             // Calculate the excess inflation reward to be refunded by validator to SoloValidatorBond.
@@ -159,7 +162,16 @@ pub async fn handle_validator_bond_manager(args: ValidatorBondManagerArgs) -> Re
             // TODO: Make the actual SOL transfer if not a dry run
             if !args.dry_run {
                 // transfer_excess_rewards_with_delegate_tips
-                todo!("Make the actual SOL transfer");
+                let cluster = Cluster::Custom(args.rpc.clone(), args.rpc.replace("http", "ws"));
+                transfer_excess_rewards(
+                    args.payer.clone(),
+                    cluster,
+                    &bond_pubkey,
+                    &bond,
+                    u64::try_from(excess_rewards)?,
+                )
+                .await
+                .map_err(|e| anyhow!("Failed to transfer excess rewards: {}", e))?
             }
         }
         flush();
