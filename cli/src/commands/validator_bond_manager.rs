@@ -31,11 +31,7 @@ pub struct ValidatorBondManagerArgs {
     )]
     rpc: String,
     /// The Pye program ID
-    #[arg(
-        short,
-        long,
-        default_value = "PYEQZ2qYHPQapnw8Ms8MSPMNzoq59NHHfNwAtuV26wx"
-    )]
+    #[arg(long, default_value = "PYEQZ2qYHPQapnw8Ms8MSPMNzoq59NHHfNwAtuV26wx")]
     program_id: Pubkey,
     /// Validator's vote accoutn
     #[arg(short, long, env)]
