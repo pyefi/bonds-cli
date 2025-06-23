@@ -4,10 +4,11 @@ use crate::metrics_helpers::*;
 use crate::rewards::block_rewards::calculate_excess_block_reward;
 use crate::rewards::inflation_rewards::calculate_excess_inflation_reward;
 use crate::rewards::mev_rewards::{calculate_excess_mev_reward, fetch_and_filter_mev_data};
-use crate::transactions::transfer_excess_rewards_with_delegate_tips;
+use crate::transactions::transfer_excess_rewards;
 use anchor_client::Cluster;
 use anyhow::{anyhow, Result};
 use dialoguer::Confirm;
+use log::info;
 use solana_client::nonblocking::rpc_client::RpcClient;
 use solana_metrics::{datapoint_info, flush};
 use solana_sdk::{commitment_config::CommitmentConfig, pubkey::Pubkey};
@@ -27,9 +28,8 @@ pub async fn handle_transfer_excess_rewards(args: TransferExcessRewardsArgs) -> 
 
     // Fetch RewardCommissions configured on SoloValidatorBond.
     let bond = fetch_solo_validator_bond(&client, &bond_pubkey).await?;
-
     let reward_commissions = bond.reward_commissions.clone();
-    println!("\nCurrent {:?}", reward_commissions);
+    info!("Current: {:?}", reward_commissions);
 
     // Fetch the current Solana Network epoch.
     let epoch_info = client.get_epoch_info().await?;
@@ -48,6 +48,7 @@ pub async fn handle_transfer_excess_rewards(args: TransferExcessRewardsArgs) -> 
         &bond.stake_account,
         &bond.transient_stake_account,
         target_epoch,
+        current_epoch,
     )
     .await?;
 
@@ -118,7 +119,7 @@ pub async fn handle_transfer_excess_rewards(args: TransferExcessRewardsArgs) -> 
         .interact()?
     {
         let cluster = Cluster::Custom(args.rpc.clone(), args.rpc.replace("http", "ws"));
-        transfer_excess_rewards_with_delegate_tips(
+        transfer_excess_rewards(
             args.payer_file_path,
             cluster,
             &bond_pubkey,

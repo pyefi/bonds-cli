@@ -1,6 +1,8 @@
 use anchor_lang::{AccountDeserialize, Discriminator};
 use anyhow::{anyhow, Error};
+use log::info;
 use pye_core_cpi::pye_core::accounts::SoloValidatorBond;
+use solana_account_decoder_client_types::UiAccountEncoding;
 use solana_client::nonblocking::rpc_client::RpcClient;
 use solana_client::rpc_config::{RpcAccountInfoConfig, RpcProgramAccountsConfig};
 use solana_client::rpc_filter::{Memcmp, MemcmpEncodedBytes, RpcFilterType};
@@ -47,23 +49,27 @@ pub async fn fetch_active_solo_validator_bonds_by_vote_key(
     program_id: &Pubkey,
     vote_pubkey: &Pubkey,
 ) -> Result<Vec<(Pubkey, SoloValidatorBond)>, Error> {
-    let discriminator_filter = RpcFilterType::Memcmp(Memcmp::new_raw_bytes(
+    let discriminator_filter = RpcFilterType::Memcmp(Memcmp::new_base58_encoded(
         0,
-        SoloValidatorBond::DISCRIMINATOR.to_vec(),
+        SoloValidatorBond::DISCRIMINATOR,
     ));
     let vote_pubkey_filter = RpcFilterType::Memcmp(Memcmp::new(
         8,
-        MemcmpEncodedBytes::Bytes(vote_pubkey.to_bytes().to_vec()),
+        MemcmpEncodedBytes::Base58(vote_pubkey.to_string()),
     ));
-    let not_matured_filter =
-        RpcFilterType::Memcmp(Memcmp::new(185, MemcmpEncodedBytes::Bytes(vec![0])));
+    let not_matured_filter = RpcFilterType::Memcmp(Memcmp::new_base58_encoded(185, &[0]));
     let config = RpcProgramAccountsConfig {
         filters: Some(vec![
             discriminator_filter,
             vote_pubkey_filter,
             not_matured_filter,
         ]),
-        account_config: RpcAccountInfoConfig::default(),
+        account_config: RpcAccountInfoConfig {
+            encoding: Some(UiAccountEncoding::Base64Zstd),
+            data_slice: None,
+            commitment: None,
+            min_context_slot: None,
+        },
         with_context: None,
         sort_results: None,
     };
@@ -71,6 +77,7 @@ pub async fn fetch_active_solo_validator_bonds_by_vote_key(
         .get_program_accounts_with_config(program_id, config)
         .await
         .map_err(|e| anyhow!("Failed to fetch SoloValidatorBond: {}", e))?;
+    info!("Fetched {} active bonds", accounts.len());
 
     Ok(accounts
         .into_iter()

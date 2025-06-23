@@ -1,7 +1,8 @@
 use crate::rpc_utils;
 use anyhow::{anyhow, Result};
-use pye_core_cpi::pye_core::types::RewardCommissions;
 use futures::stream::{self, StreamExt};
+use log::info;
+use pye_core_cpi::pye_core::types::RewardCommissions;
 use solana_client::nonblocking::rpc_client::RpcClient;
 use solana_client::rpc_config::RpcLeaderScheduleConfig;
 use solana_sdk::commitment_config::CommitmentConfig;
@@ -85,7 +86,7 @@ pub async fn calculate_block_rewards(
     let slot_history = Arc::new(crate::accounts::fetch_slot_history(rpc).await?);
 
     // TODO: Replace with a batched JSON-RPC call to reduce HTTP overhead.
-    println!(
+    info!(
         "Fetching {} Blocks Produced in Epoch {}",
         slots.len(),
         epoch_info.epoch - 1,
@@ -138,7 +139,7 @@ pub async fn calculate_excess_block_reward(
         calculate_block_rewards(client, vote_pubkey, epoch_info, concurrency).await;
 
     if validator_active_stake == 0 {
-        println!("No excess block reward when validator active stake is 0");
+        info!("No excess block reward when validator active stake is 0");
         return Ok(0);
     }
 
@@ -150,14 +151,14 @@ pub async fn calculate_excess_block_reward(
                 validator_active_stake,
                 reward_commissions.block_rewards_bps,
             );
-            println!(
+            info!(
                 "Total Block Reward: {}, Excess Block Commission: {}\n",
                 amount, excess_block_commission
             );
             Ok(excess_block_commission)
         }
         Err(e) => {
-            println!(
+            info!(
                 "Error fetching block reward: {}. Assuming no block reward earned.\n",
                 e
             );

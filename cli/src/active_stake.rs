@@ -1,4 +1,5 @@
 use anyhow::{anyhow, Result};
+use log::info;
 use solana_client::nonblocking::rpc_client::RpcClient;
 use solana_client::rpc_response::StakeActivationState;
 use solana_sdk::account::{Account, ReadableAccount};
@@ -58,17 +59,36 @@ pub async fn fetch_bond_active_stake(
     stake_account_key: &Pubkey,
     transient_stake_account_key: &Pubkey,
     target_epoch: u64,
+    current_epoch: u64,
 ) -> Result<u64> {
+    if target_epoch != current_epoch - 1 {
+        return Err(anyhow!("Unsupported target epoch delta"));
+    }
     let stake_account = &client
         .get_account(stake_account_key)
         .await
         .map_err(|e| anyhow!("Failed to fetch StakeAccount: {}", e))?;
     let stake_state = &stake_account.deserialize_data::<StakeStateV2>()?;
-    let stake_amount =
+    // TODO: Fetch inflation rewards for the target epoch
+    let maybe_inflation_rewards = &client
+        .get_inflation_reward(&[*stake_account_key], Some(target_epoch))
+        .await?;
+    let inflation_rewards = maybe_inflation_rewards[0]
+        .as_ref()
+        .map(|x| x.amount)
+        .unwrap_or(0);
+    let active_stake_for_current_epoch =
         fetch_stake_for_epoch(client, stake_account, stake_state, target_epoch).await?;
-    println!("Current Stake Account: {:?}", stake_amount);
+    info!(
+        "Current Stake Account: {:?}",
+        active_stake_for_current_epoch
+    );
+    let mut bond_active_stake = active_stake_for_current_epoch.active - inflation_rewards;
+    info!(
+        "Active stake for epoch {}: {}",
+        target_epoch, bond_active_stake
+    );
 
-    let mut bond_active_stake = stake_amount.active;
     if !transient_stake_account_key.eq(&Pubkey::default()) {
         let transient_account = &client
             .get_account(&transient_stake_account_key)
@@ -77,10 +97,25 @@ pub async fn fetch_bond_active_stake(
         let transient_state = &transient_account.deserialize_data::<StakeStateV2>()?;
         let transient_amount =
             fetch_stake_for_epoch(client, transient_account, transient_state, target_epoch).await?;
-        println!("Transient Stake Account: {:?}", transient_amount);
-        bond_active_stake += transient_amount.active;
+        let maybe_inflation_rewards = &client
+            .get_inflation_reward(&[*stake_account_key], Some(target_epoch))
+            .await?;
+        let inflation_rewards = maybe_inflation_rewards[0]
+            .as_ref()
+            .map(|x| x.amount)
+            .unwrap_or(0);
+        let transient_stake_at_target_epoch = transient_amount.active - inflation_rewards;
+        info!(
+            "Transient Stake Account: {:?}",
+            transient_stake_at_target_epoch
+        );
+        info!(
+            "Transient active stake for epoch {}: {}",
+            target_epoch, transient_stake_at_target_epoch
+        );
+        bond_active_stake += transient_stake_at_target_epoch;
     }
 
-    println!("Total Bond Active Stake: {}\n", bond_active_stake);
+    info!("Total Bond Active Stake: {}\n", bond_active_stake);
     Ok(bond_active_stake)
 }

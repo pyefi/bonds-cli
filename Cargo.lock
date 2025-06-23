@@ -3090,6 +3090,7 @@ dependencies = [
  "reqwest 0.12.20",
  "serde",
  "serde_json",
+ "solana-account-decoder-client-types",
  "solana-client",
  "solana-commitment-config",
  "solana-metrics",

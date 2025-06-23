@@ -1,4 +1,5 @@
 use anyhow::{anyhow, Result};
+use log::{error, info};
 use pye_core_cpi::pye_core::types::RewardCommissions;
 use solana_client::nonblocking::rpc_client::RpcClient;
 use solana_sdk::pubkey::Pubkey;
@@ -48,7 +49,8 @@ async fn get_excess_inflation_reward(
         );
         Ok(excess)
     } else {
-        Err(anyhow!("No inflation rewards found for {}", address))
+        // This is the case for stake accounts that are activating
+        return Ok(0);
     }
 }
 
@@ -64,12 +66,12 @@ pub async fn calculate_excess_inflation_reward(
             .await
         {
             Ok(amount) => {
-                println!("Excess Stake Account Inflation Commission: {:?}", amount);
+                info!("Excess Stake Account Inflation Commission: {:?}", amount);
                 amount
             }
             Err(e) => {
-                println!("Error for stake account: {}", e);
-                0 // Return 0 for stake account on error
+                error!("Error for stake account: {}", e);
+                0 // Return 0 for stake account on error.
             }
         };
 
@@ -83,14 +85,14 @@ pub async fn calculate_excess_inflation_reward(
         .await
         {
             Ok(amount) => {
-                println!(
+                info!(
                     "Excess Transient Account Inflation Commission: {:?}\n",
                     amount
                 );
                 amount
             }
             Err(e) => {
-                println!("Error for transient account: {}\n", e);
+                error!("Error for transient account: {}\n", e);
                 0 // Return 0 for transient account on error
             }
         }
