@@ -2,6 +2,7 @@ use anchor_client::Cluster;
 use anyhow::{anyhow, Result};
 use clap::Parser;
 use log::info;
+use pye_core_cpi::pye_core::accounts::SoloValidatorBond;
 use solana_client::nonblocking::rpc_client::RpcClient;
 use solana_commitment_config::CommitmentConfig;
 use solana_metrics::{datapoint_error, datapoint_info, flush};
@@ -50,7 +51,8 @@ pub struct ValidatorBondManagerArgs {
 pub async fn handle_validator_bond_manager(args: ValidatorBondManagerArgs) -> Result<()> {
     let rpc_client =
         RpcClient::new_with_commitment(args.rpc.clone(), CommitmentConfig::confirmed());
-    // TODO: Load all the bond accounts owned by the validator
+
+    let epoch_schedule = rpc_client.get_epoch_schedule().await?;
     let mut current_epoch_info = match rpc_client.get_epoch_info().await {
         Ok(info) => info,
         Err(err) => {
@@ -84,11 +86,27 @@ pub async fn handle_validator_bond_manager(args: ValidatorBondManagerArgs) -> Re
         current_epoch_info = wait_for_next_epoch(&rpc_client, current_epoch_info.epoch).await;
         info!("Current epoch: {}\n", current_epoch_info.epoch);
         let target_epoch = current_epoch_info.epoch - 1;
+        let last_slot_of_target = epoch_schedule.get_last_slot_in_epoch(target_epoch);
 
-        // For all active bonds, log their commission structures
-        active_bonds.iter().for_each(|(bond_pubkey, bond)| {
-            log_reward_commissions(target_epoch, &bond_pubkey, &bond.reward_commissions)
-        });
+        let block_time = match rpc_client.get_block_time(last_slot_of_target).await {
+            Err(_) => {
+                // TODO: Get a more accurate time of the end of the epoch to determine if payment
+                // should be made. One idea is catch RpcError::ForUser and check for next block
+                // in subsequent slots
+                let now = chrono::Utc::now();
+                now.timestamp()
+            }
+            Ok(block_time) => block_time,
+        };
+
+        // For all active bonds, log their commission structures and filter by maturity
+        let active_bonds: Vec<(Pubkey, SoloValidatorBond)> = active_bonds
+            .into_iter()
+            .filter(|(bond_pubkey, bond)| {
+                log_reward_commissions(target_epoch, &bond_pubkey, &bond.reward_commissions);
+                bond.maturity_ts > block_time
+            })
+            .collect();
 
         // Load MEV data
         let mev_data = fetch_and_filter_mev_data(&args.vote_pubkey, target_epoch).await?;
@@ -155,7 +173,7 @@ pub async fn handle_validator_bond_manager(args: ValidatorBondManagerArgs) -> Re
                 ("total_excess_rewards", excess_rewards, i64),
             );
 
-            // TODO: Make the actual SOL transfer if not a dry run
+            // Make the actual SOL transfer if not a dry run
             if !args.dry_run {
                 // transfer_excess_rewards_with_delegate_tips
                 let cluster = Cluster::Custom(args.rpc.clone(), args.rpc.replace("http", "ws"));
