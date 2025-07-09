@@ -44,10 +44,11 @@ pub async fn fetch_solo_validator_bond(
     Ok(bond)
 }
 
-pub async fn fetch_active_solo_validator_bonds_by_vote_key(
+pub async fn fetch_active_solo_validator_bonds_by_vote_key_and_issuer(
     client: &RpcClient,
     program_id: &Pubkey,
     vote_pubkey: &Pubkey,
+    issuer_pubkey: &Pubkey,
 ) -> Result<Vec<(Pubkey, SoloValidatorBond)>, Error> {
     let discriminator_filter = RpcFilterType::Memcmp(Memcmp::new_base58_encoded(
         0,
@@ -57,12 +58,17 @@ pub async fn fetch_active_solo_validator_bonds_by_vote_key(
         8,
         MemcmpEncodedBytes::Base58(vote_pubkey.to_string()),
     ));
+    let issuer_pubkey_filter = RpcFilterType::Memcmp(Memcmp::new(
+        240,
+        MemcmpEncodedBytes::Base58(issuer_pubkey.to_string()),
+    ));
     let not_matured_filter = RpcFilterType::Memcmp(Memcmp::new_base58_encoded(185, &[0]));
     let config = RpcProgramAccountsConfig {
         filters: Some(vec![
             discriminator_filter,
             vote_pubkey_filter,
             not_matured_filter,
+            issuer_pubkey_filter,
         ]),
         account_config: RpcAccountInfoConfig {
             encoding: Some(UiAccountEncoding::Base64Zstd),

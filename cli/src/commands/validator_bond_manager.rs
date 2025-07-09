@@ -9,7 +9,7 @@ use solana_metrics::{datapoint_error, datapoint_info, flush};
 use solana_sdk::pubkey::Pubkey;
 
 use crate::{
-    accounts::fetch_active_solo_validator_bonds_by_vote_key,
+    accounts::fetch_active_solo_validator_bonds_by_vote_key_and_issuer,
     active_stake::fetch_bond_active_stake,
     metrics_helpers::{log_reward_commissions, log_validator_mev_data},
     rewards::{
@@ -37,6 +37,9 @@ pub struct ValidatorBondManagerArgs {
     /// Validator's vote accoutn
     #[arg(short, long, env)]
     vote_pubkey: Pubkey,
+    /// Restricts bond payments to only bonds issued by this pubkey.
+    #[arg(short, long, env)]
+    issuer_pubkey: Pubkey,
     /// Path to payer keypair
     #[arg(short, long, env)]
     payer: String,
@@ -66,10 +69,11 @@ pub async fn handle_validator_bond_manager(args: ValidatorBondManagerArgs) -> Re
     loop {
         // Fetch bonds that are still active prior to waiting for the next epoch, to make sure we
         // don't miss any.
-        let active_bonds = match fetch_active_solo_validator_bonds_by_vote_key(
+        let active_bonds = match fetch_active_solo_validator_bonds_by_vote_key_and_issuer(
             &rpc_client,
             &args.program_id,
             &args.vote_pubkey,
+            &args.issuer_pubkey,
         )
         .await
         {
@@ -82,9 +86,17 @@ pub async fn handle_validator_bond_manager(args: ValidatorBondManagerArgs) -> Re
                 return Err(anyhow!("Error fetching active bonds: {:?}", err));
             }
         };
+        info!(
+            "Monitoring {} bonds for epoch {}",
+            active_bonds.len(),
+            current_epoch_info.epoch
+        );
         // We block the flow until the next epoch
         current_epoch_info = wait_for_next_epoch(&rpc_client, current_epoch_info.epoch).await;
-        info!("Current epoch: {}\n", current_epoch_info.epoch);
+        info!(
+            "Epoch boundary detected. New epoch: {}",
+            current_epoch_info.epoch
+        );
         let target_epoch = current_epoch_info.epoch - 1;
         let last_slot_of_target = epoch_schedule.get_last_slot_in_epoch(target_epoch);
 
