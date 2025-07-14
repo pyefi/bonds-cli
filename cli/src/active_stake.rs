@@ -69,7 +69,7 @@ pub async fn fetch_bond_active_stake(
         .await
         .map_err(|e| anyhow!("Failed to fetch StakeAccount: {}", e))?;
     let stake_state = &stake_account.deserialize_data::<StakeStateV2>()?;
-    // TODO: Fetch inflation rewards for the target epoch
+    // Fetch inflation rewards for the target epoch
     let maybe_inflation_rewards = &client
         .get_inflation_reward(&[*stake_account_key], Some(target_epoch))
         .await?;
