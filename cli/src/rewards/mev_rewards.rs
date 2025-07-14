@@ -97,11 +97,27 @@ pub async fn fetch_mev_with_retry(
     let mut attempt: u64 = 0;
     loop {
         match fetch_mev_data(target_epoch).await {
-            Ok(res) => return Ok(res),
+            Ok(res) => {
+                // We check the sum of rewards. If it's 0, then we know the Jito API hasn't been properly updated so we should wait
+                let total_mev_rewards = res
+                    .validators
+                    .iter()
+                    .fold(0u64, |accum, x| accum + x.mev_rewards);
+                if total_mev_rewards == 0 {
+                    attempt += 1;
+                    if attempt >= max_attempts {
+                        return Err(anyhow!("jito mev: Max attempts reached"));
+                    } else {
+                        tokio::time::sleep(duration).await;
+                    }
+                } else {
+                    return Ok(res);
+                }
+            }
             Err(err) => {
                 attempt += 1;
                 if attempt >= max_attempts {
-                    return Err(err);
+                    return Err(err.into());
                 } else {
                     tokio::time::sleep(duration).await;
                 }
