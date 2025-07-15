@@ -1,3 +1,5 @@
+use std::time::Duration;
+
 use anchor_client::Cluster;
 use anyhow::{anyhow, Result};
 use clap::Parser;
@@ -32,7 +34,11 @@ pub struct ValidatorBondManagerArgs {
     )]
     rpc: String,
     /// The Pye program ID
-    #[arg(long, default_value = "PYEQZ2qYHPQapnw8Ms8MSPMNzoq59NHHfNwAtuV26wx")]
+    #[arg(
+        long,
+        env,
+        default_value = "PYEQZ2qYHPQapnw8Ms8MSPMNzoq59NHHfNwAtuV26wx"
+    )]
     program_id: Pubkey,
     /// Validator's vote accoutn
     #[arg(short, long, env)]
@@ -49,6 +55,9 @@ pub struct ValidatorBondManagerArgs {
     /// Dry mode to calculate excess rewards without transferring.
     #[arg(long, env)]
     dry_run: bool,
+    /// The wait time (in secs) between epoch change checks
+    #[arg(long, env, default_value = "60")]
+    cycle_secs: u64,
 }
 
 pub async fn handle_validator_bond_manager(args: ValidatorBondManagerArgs) -> Result<()> {
@@ -92,7 +101,10 @@ pub async fn handle_validator_bond_manager(args: ValidatorBondManagerArgs) -> Re
             current_epoch_info.epoch
         );
         // We block the flow until the next epoch
-        current_epoch_info = wait_for_next_epoch(&rpc_client, current_epoch_info.epoch).await;
+        current_epoch_info =
+            wait_for_next_epoch(&rpc_client, current_epoch_info.epoch, args.cycle_secs).await;
+        // We wait 30 seconds to avoid "Epoch rewards period still active at slot" RPC errors
+        tokio::time::sleep(Duration::from_secs(30)).await;
         info!(
             "Epoch boundary detected. New epoch: {}",
             current_epoch_info.epoch

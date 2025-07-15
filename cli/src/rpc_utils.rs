@@ -98,9 +98,13 @@ pub async fn get_block(
     };
 }
 
-pub async fn wait_for_next_epoch(rpc_client: &RpcClient, current_epoch: u64) -> EpochInfo {
+pub async fn wait_for_next_epoch(
+    rpc_client: &RpcClient,
+    current_epoch: u64,
+    cycle_secs: u64,
+) -> EpochInfo {
     loop {
-        tokio::time::sleep(Duration::from_secs(10)).await; // Check every 10 seconds
+        tokio::time::sleep(Duration::from_secs(cycle_secs)).await;
         let new_epoch_info = match rpc_client.get_epoch_info().await {
             Ok(info) => info,
             Err(e) => {
