@@ -124,7 +124,7 @@ pub async fn calculate_block_rewards(
                                     ));
                                 }
                                 _ => {
-                                    if attempts > 5 {
+                                    if attempts >= 5 {
                                         return Err(anyhow!(
                                             "Failed to fetch block at slot {}: {}",
                                             slot,
