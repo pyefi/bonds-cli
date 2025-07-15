@@ -1,4 +1,4 @@
-use crate::rpc_utils;
+use crate::rpc_utils::{self, PriorityFeeKeeperError};
 use anyhow::{anyhow, Result};
 use futures::stream::{self, StreamExt};
 use log::info;
@@ -10,6 +10,7 @@ use solana_sdk::epoch_info::EpochInfo;
 use solana_sdk::pubkey::Pubkey;
 use solana_sdk::reward_type::RewardType;
 use std::sync::Arc;
+use std::time::Duration;
 
 /// Computes the excess block commission owed to bond holders.
 ///
@@ -96,21 +97,47 @@ pub async fn calculate_block_rewards(
             let node_identity = node_identity.clone();
             let slot_history = Arc::clone(&slot_history);
             async move {
-                match rpc_utils::get_block(rpc, slot, &slot_history).await {
-                    Ok(block) => {
-                        let mut total = 0;
-                        if let Some(rewards) = block.rewards {
-                            for r in rewards {
-                                if r.pubkey == node_identity {
-                                    if let Some(RewardType::Fee) = r.reward_type {
-                                        total += r.lamports as u64;
+                let mut attempts: u8 = 0;
+                loop {
+                    attempts += 1;
+                    match rpc_utils::get_block(rpc, slot, &slot_history).await {
+                        Ok(block) => {
+                            let mut total = 0;
+                            if let Some(rewards) = block.rewards {
+                                for r in rewards {
+                                    if r.pubkey == node_identity {
+                                        if let Some(RewardType::Fee) = r.reward_type {
+                                            total += r.lamports as u64;
+                                        }
+                                    }
+                                }
+                            }
+                            return Ok(total);
+                        }
+                        Err(e) => {
+                            match e {
+                                PriorityFeeKeeperError::SkippedBlock => {
+                                    return Err(anyhow!(
+                                        "Failed to fetch block at slot {}: {}",
+                                        slot,
+                                        e
+                                    ));
+                                }
+                                _ => {
+                                    if attempts >= 5 {
+                                        return Err(anyhow!(
+                                            "Failed to fetch block at slot {}: {}",
+                                            slot,
+                                            e
+                                        ));
+                                    } else {
+                                        // sleep for 30min before trying this block again. Max wait time is currently 2.5 hours
+                                        tokio::time::sleep(Duration::from_secs(1800)).await;
                                     }
                                 }
                             }
                         }
-                        Ok(total)
                     }
-                    Err(e) => Err(anyhow!("Failed to fetch block at slot {}: {}", slot, e)),
                 }
             }
         })
