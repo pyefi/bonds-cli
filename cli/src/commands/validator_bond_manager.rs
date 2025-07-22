@@ -180,9 +180,10 @@ pub async fn handle_validator_bond_manager(args: ValidatorBondManagerArgs) -> Re
 
             let excess_rewards =
                 excess_inflation_reward + excess_block_commission + excess_mev_commission;
+            
             info!(
                 "Bond: {}\nSOL to transfer: {}\n\n",
-                excess_rewards, excess_rewards
+                bond_pubkey, excess_rewards
             );
 
             datapoint_info!(
@@ -197,7 +198,15 @@ pub async fn handle_validator_bond_manager(args: ValidatorBondManagerArgs) -> Re
                 ("total_excess_rewards", excess_rewards, i64),
             );
 
-            // Make the actual SOL transfer if not a dry run
+            if excess_rewards <= 0 {
+                info!(
+                    "No excess rewards to transfer to bond {} for epoch {}\n",
+                    bond_pubkey, target_epoch
+                );
+                continue;
+            }
+
+            // Make the actual SOL transfer if not a dry run and rewards are greater than 0
             if !args.dry_run {
                 // transfer_excess_rewards_with_delegate_tips
                 let cluster = Cluster::Custom(args.rpc.clone(), args.rpc.replace("http", "ws"));
