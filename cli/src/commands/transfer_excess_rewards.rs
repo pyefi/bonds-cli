@@ -99,7 +99,7 @@ pub async fn handle_transfer_excess_rewards(args: TransferExcessRewardsArgs) -> 
     flush();
 
     if excess_rewards <= 0 {
-        println!(
+        info!(
             "No excess rewards to transfer to SoloValidatorBond for epoch {}\n",
             target_epoch
         );
@@ -107,7 +107,7 @@ pub async fn handle_transfer_excess_rewards(args: TransferExcessRewardsArgs) -> 
     }
 
     if args.dry_run {
-        println!("Dry run complete");
+        info!("Dry run complete");
         return Ok(());
     }
 
@@ -129,7 +129,7 @@ pub async fn handle_transfer_excess_rewards(args: TransferExcessRewardsArgs) -> 
         .await
         .map_err(|e| anyhow!("Failed to transfer excess rewards: {}", e))
     } else {
-        println!("Aborted: user declined to transfer excess rewards.");
+        info!("Aborted: user declined to transfer excess rewards.");
         Ok(())
     }
 }
