@@ -1,7 +1,7 @@
 use crate::rpc_utils::{self, PriorityFeeKeeperError};
 use anyhow::{anyhow, Result};
 use futures::stream::{self, StreamExt};
-use log::{error, info};
+use log::{info, warn};
 use pye_core_cpi::pye_core::types::RewardCommissions;
 use solana_client::nonblocking::rpc_client::RpcClient;
 use solana_client::rpc_config::RpcLeaderScheduleConfig;
@@ -117,7 +117,7 @@ pub async fn calculate_block_rewards(
                         Err(e) => {
                             match e {
                                 PriorityFeeKeeperError::SkippedBlock => {
-                                    error!(
+                                    warn!(
                                         "PriorityFeeKeeperError::SkippedBlock at slot {}: {}",
                                         slot, e
                                     );
