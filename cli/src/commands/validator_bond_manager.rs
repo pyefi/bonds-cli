@@ -180,7 +180,7 @@ pub async fn handle_validator_bond_manager(args: ValidatorBondManagerArgs) -> Re
 
             let excess_rewards =
                 excess_inflation_reward + excess_block_commission + excess_mev_commission;
-            
+
             info!(
                 "Bond: {}\nSOL to transfer: {}\n\n",
                 bond_pubkey, excess_rewards

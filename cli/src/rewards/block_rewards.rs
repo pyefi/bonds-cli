@@ -1,7 +1,7 @@
 use crate::rpc_utils::{self, PriorityFeeKeeperError};
 use anyhow::{anyhow, Result};
 use futures::stream::{self, StreamExt};
-use log::info;
+use log::{info, warn};
 use pye_core_cpi::pye_core::types::RewardCommissions;
 use solana_client::nonblocking::rpc_client::RpcClient;
 use solana_client::rpc_config::RpcLeaderScheduleConfig;
@@ -112,16 +112,16 @@ pub async fn calculate_block_rewards(
                                     }
                                 }
                             }
-                            return Ok(total);
+                            return Ok(Some(total));
                         }
                         Err(e) => {
                             match e {
                                 PriorityFeeKeeperError::SkippedBlock => {
-                                    return Err(anyhow!(
-                                        "Failed to fetch block at slot {}: {}",
-                                        slot,
-                                        e
-                                    ));
+                                    warn!(
+                                        "PriorityFeeKeeperError::SkippedBlock at slot {}: {}",
+                                        slot, e
+                                    );
+                                    return Ok(None);
                                 }
                                 _ => {
                                     if attempts >= 5 {
@@ -144,7 +144,7 @@ pub async fn calculate_block_rewards(
         .buffer_unordered(concurrency)
         .fold(Ok(0u64), |acc, fee_result| async move {
             match (acc, fee_result) {
-                (Ok(acc), Ok(fee)) => Ok(acc + fee),
+                (Ok(acc), Ok(fee)) => Ok(acc + fee.unwrap_or(0)),
                 (Err(e), _) | (_, Err(e)) => Err(e),
             }
         })
