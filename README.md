@@ -51,6 +51,17 @@ pye-cli transfer-excess-rewards \
   --concurrency 50
 ```
 
+**For monitoring and paying all bonds for given validator and specific issuers**
+```sh
+./target/release/pye_cli validator-bond-manager \
+  --rpc https://api.mainnet-beta.solana.com \
+  --payer ~/.config/solana/id.json \
+  --vote-pubkey <VALIDATOR_VOTE_PUBKEY> \
+  --issuers <YOUR_ISSUER_PUBKEY> \
+  --issuers <ANOTHER_ISSUER_PUBKEY> \
+  --concurrency 10
+```
+
 ## Monitoring
 
 1. (For local monitoring) Setup an instance of InfluxDB and Grafana with `docker-compose up -d` (Pre-requisite: Docker installation).
