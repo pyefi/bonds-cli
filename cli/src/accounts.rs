@@ -83,7 +83,11 @@ pub async fn fetch_active_solo_validator_bonds_by_vote_key_and_issuer(
         .get_program_accounts_with_config(program_id, config)
         .await
         .map_err(|e| anyhow!("Failed to fetch SoloValidatorBond: {}", e))?;
-    info!("Fetched {} active bonds", accounts.len());
+    info!(
+        "Fetched {} active bonds for issuer {}",
+        accounts.len(),
+        issuer_pubkey
+    );
 
     Ok(accounts
         .into_iter()

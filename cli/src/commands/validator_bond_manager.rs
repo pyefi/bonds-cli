@@ -1,8 +1,9 @@
-use std::time::Duration;
+use std::{sync::Arc, time::Duration};
 
 use anchor_client::Cluster;
 use anyhow::{anyhow, Result};
 use clap::Parser;
+use futures::stream::{self, StreamExt};
 use log::info;
 use pye_core_cpi::pye_core::accounts::SoloValidatorBond;
 use solana_client::nonblocking::rpc_client::RpcClient;
@@ -43,9 +44,9 @@ pub struct ValidatorBondManagerArgs {
     /// Validator's vote accoutn
     #[arg(short, long, env)]
     vote_pubkey: Pubkey,
-    /// Restricts bond payments to only bonds issued by this pubkey.
+    /// Restricts bond payments to only bonds issued by pubkeys in this list.
     #[arg(short, long, env)]
-    issuer_pubkey: Pubkey,
+    issuers: Vec<Pubkey>,
     /// Path to payer keypair
     #[arg(short, long, env)]
     payer: String,
@@ -61,8 +62,10 @@ pub struct ValidatorBondManagerArgs {
 }
 
 pub async fn handle_validator_bond_manager(args: ValidatorBondManagerArgs) -> Result<()> {
-    let rpc_client =
-        RpcClient::new_with_commitment(args.rpc.clone(), CommitmentConfig::confirmed());
+    let rpc_client = Arc::new(RpcClient::new_with_commitment(
+        args.rpc.clone(),
+        CommitmentConfig::confirmed(),
+    ));
 
     let epoch_schedule = rpc_client.get_epoch_schedule().await?;
     let mut current_epoch_info = match rpc_client.get_epoch_info().await {
@@ -78,23 +81,38 @@ pub async fn handle_validator_bond_manager(args: ValidatorBondManagerArgs) -> Re
     loop {
         // Fetch bonds that are still active prior to waiting for the next epoch, to make sure we
         // don't miss any.
-        let active_bonds = match fetch_active_solo_validator_bonds_by_vote_key_and_issuer(
-            &rpc_client,
-            &args.program_id,
-            &args.vote_pubkey,
-            &args.issuer_pubkey,
-        )
-        .await
-        {
-            Ok(bonds) => bonds,
-            Err(err) => {
-                datapoint_error!(
-                    "handle_validator_bond_manager",
-                    ("error", err.to_string(), String),
-                );
-                return Err(anyhow!("Error fetching active bonds: {:?}", err));
-            }
-        };
+        let results: Vec<_> = stream::iter(args.issuers.to_owned())
+            .map(|issuer_pubkey| {
+                let cloned_client = rpc_client.clone();
+                async move {
+                    match fetch_active_solo_validator_bonds_by_vote_key_and_issuer(
+                        &cloned_client,
+                        &args.program_id,
+                        &args.vote_pubkey,
+                        &issuer_pubkey.clone(),
+                    )
+                    .await
+                    {
+                        Ok(bonds) => Ok(bonds),
+                        Err(err) => {
+                            datapoint_error!(
+                                "handle_validator_bond_manager",
+                                ("error", err.to_string(), String),
+                            );
+                            return Err(anyhow!("Error fetching active bonds: {:?}", err));
+                        }
+                    }
+                }
+            })
+            .buffer_unordered(args.concurrency)
+            .collect::<Vec<_>>()
+            .await;
+        let active_bonds: Vec<(Pubkey, SoloValidatorBond)> = results
+            .into_iter()
+            .filter_map(Result::ok)
+            .flatten()
+            .collect();
+
         info!(
             "Monitoring {} bonds for epoch {}",
             active_bonds.len(),
