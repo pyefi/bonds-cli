@@ -105,6 +105,11 @@ pub async fn wait_for_next_epoch(
 ) -> EpochInfo {
     loop {
         tokio::time::sleep(Duration::from_secs(cycle_secs)).await;
+        info!(
+            "Checking for epoch boundary... current_epoch: {}",
+            current_epoch
+        );
+
         let new_epoch_info = match rpc_client.get_epoch_info().await {
             Ok(info) => info,
             Err(e) => {
