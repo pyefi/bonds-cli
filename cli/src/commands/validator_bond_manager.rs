@@ -45,7 +45,7 @@ pub struct ValidatorBondManagerArgs {
     #[arg(short, long, env)]
     vote_pubkey: Pubkey,
     /// Restricts bond payments to only bonds issued by pubkeys in this list.
-    #[arg(short, long, env, value_delimiter=',')]
+    #[arg(short, long, env, value_delimiter = ',')]
     issuers: Vec<Pubkey>,
     /// Path to payer keypair
     #[arg(short, long, env)]
