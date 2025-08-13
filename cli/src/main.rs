@@ -44,7 +44,7 @@ enum Commands {
         dry_run: bool,
     },
 
-    /// Will run the excess rewards stuff for all bonds owned by a valdiator
+    /// Will run the excess rewards stuff for all bonds owned by a validator
     ValidatorBondManager {
         #[command(flatten)]
         args: ValidatorBondManagerArgs,
