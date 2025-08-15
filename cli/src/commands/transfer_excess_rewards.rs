@@ -20,6 +20,7 @@ pub struct TransferExcessRewardsArgs {
     pub bond: String,
     pub concurrency: usize,
     pub dry_run: bool,
+    pub block_retry_delay: u64,
 }
 
 pub async fn handle_transfer_excess_rewards(args: TransferExcessRewardsArgs) -> Result<()> {
@@ -75,6 +76,7 @@ pub async fn handle_transfer_excess_rewards(args: TransferExcessRewardsArgs) -> 
         mev_data.active_stake,
         &reward_commissions,
         args.concurrency,
+        args.block_retry_delay,
     )
     .await?;
 
