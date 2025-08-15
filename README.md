@@ -32,7 +32,7 @@ Transfer any excess MEV rewards from the last completed epoch into your SoloVali
 **Usage:**
 
 ```sh
-pye-cli transfer-excess-rewards \
+pye-bonds-cli transfer-excess-rewards \
   --rpc <RPC_URL> \
   --payer <KEYPAIR_PATH> \
   --bond <BOND_PUBKEY> \
@@ -43,7 +43,7 @@ pye-cli transfer-excess-rewards \
 **Example:**
 
 ```sh
-./target/release/pye_cli transfer-excess-rewards \
+./target/release/pye-bonds-cli transfer-excess-rewards \
   --rpc https://api.mainnet-beta.solana.com \
   --payer ~/.config/solana/id.json \
   --bond HETNBL5z4Q1xPw2kTpAR462TPRwdFrCqaS94fXX9LuKh \
@@ -53,7 +53,7 @@ pye-cli transfer-excess-rewards \
 
 **For monitoring and paying all bonds for given validator and specific issuers**
 ```sh
-./target/release/pye_cli validator-bond-manager \
+./target/release/pye-bonds-cli validator-bond-manager \
   --rpc https://api.mainnet-beta.solana.com \
   --payer ~/.config/solana/id.json \
   --vote-pubkey <VALIDATOR_VOTE_PUBKEY> \
