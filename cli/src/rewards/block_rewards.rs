@@ -133,7 +133,8 @@ pub async fn calculate_block_rewards(
                                         ));
                                     } else {
                                         // sleep for 30min before trying this block again. Max wait time is currently 2.5 hours
-                                        tokio::time::sleep(Duration::from_secs(block_retry_delay)).await;
+                                        tokio::time::sleep(Duration::from_secs(block_retry_delay))
+                                            .await;
                                     }
                                 }
                             }
@@ -164,8 +165,14 @@ pub async fn calculate_excess_block_reward(
     concurrency: usize,
     block_retry_delay: u64,
 ) -> Result<i64> {
-    let total_block_reward: std::result::Result<u64, anyhow::Error> =
-        calculate_block_rewards(client, vote_pubkey, epoch_info, concurrency, block_retry_delay).await;
+    let total_block_reward: std::result::Result<u64, anyhow::Error> = calculate_block_rewards(
+        client,
+        vote_pubkey,
+        epoch_info,
+        concurrency,
+        block_retry_delay,
+    )
+    .await;
 
     if validator_active_stake == 0 {
         info!("No excess block reward when validator active stake is 0");

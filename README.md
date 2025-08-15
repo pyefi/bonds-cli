@@ -36,8 +36,9 @@ pye-bonds-cli transfer-excess-rewards \
   --rpc <RPC_URL> \
   --payer <KEYPAIR_PATH> \
   --bond <BOND_PUBKEY> \
-  [--concurrency <NUMBER>]
-  [--dry-run]
+  [--concurrency <NUMBER>] \
+  [--dry-run] \
+  [--block-retry-delay <BLOCK_RETRY_DELAY>]
 ```
 
 **Example:**
@@ -48,7 +49,8 @@ pye-bonds-cli transfer-excess-rewards \
   --payer ~/.config/solana/id.json \
   --bond HETNBL5z4Q1xPw2kTpAR462TPRwdFrCqaS94fXX9LuKh \
   --cluster Mainnet \
-  --concurrency 50
+  --concurrency 50 \
+  --block-retry-delay <BLOCK_RETRY_DELAY>
 ```
 
 **For monitoring and paying all bonds for given validator and specific issuers**
@@ -59,7 +61,8 @@ pye-bonds-cli transfer-excess-rewards \
   --vote-pubkey <VALIDATOR_VOTE_PUBKEY> \
   --issuers <YOUR_ISSUER_PUBKEY> \
   --issuers <ANOTHER_ISSUER_PUBKEY> \
-  --concurrency 10
+  --concurrency 10 \
+  --block-retry-delay <BLOCK_RETRY_DELAY>
 ```
 
 ## Monitoring
