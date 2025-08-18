@@ -42,6 +42,9 @@ enum Commands {
         /// Dry mode to calculate excess rewards without transferring.
         #[arg(long, env)]
         dry_run: bool,
+        /// The wait time (in secs) between get_block RPC call retries.
+        #[arg(long, env, default_value = "1800")]
+        block_retry_delay: u64,
     },
 
     /// Will run the excess rewards stuff for all bonds owned by a validator
@@ -67,6 +70,7 @@ async fn main() -> Result<()> {
             bond,
             concurrency,
             dry_run,
+            block_retry_delay,
         } => {
             handle_transfer_excess_rewards(TransferExcessRewardsArgs {
                 rpc,
@@ -74,6 +78,7 @@ async fn main() -> Result<()> {
                 bond,
                 concurrency,
                 dry_run,
+                block_retry_delay,
             })
             .await
         }

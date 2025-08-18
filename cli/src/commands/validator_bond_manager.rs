@@ -59,6 +59,9 @@ pub struct ValidatorBondManagerArgs {
     /// The wait time (in secs) between epoch change checks
     #[arg(long, env, default_value = "60")]
     cycle_secs: u64,
+    /// The wait time (in secs) between get_block RPC call retries.
+    #[arg(long, env, default_value = "1800")]
+    block_retry_delay: u64,
 }
 
 pub async fn handle_validator_bond_manager(args: ValidatorBondManagerArgs) -> Result<()> {
@@ -159,6 +162,7 @@ pub async fn handle_validator_bond_manager(args: ValidatorBondManagerArgs) -> Re
             &args.vote_pubkey,
             &current_epoch_info,
             args.concurrency,
+            args.block_retry_delay,
         )
         .await?;
 
