@@ -1,6 +1,8 @@
 use anyhow::{anyhow, Result};
-use log::info;
+use log::{info, warn};
+use regex::Regex;
 use solana_client::nonblocking::rpc_client::RpcClient;
+use solana_client::rpc_request::RpcError;
 use solana_client::rpc_response::StakeActivationState;
 use solana_sdk::account::{Account, ReadableAccount};
 use solana_sdk::pubkey::Pubkey;
@@ -64,10 +66,37 @@ pub async fn fetch_bond_active_stake(
     if target_epoch != current_epoch - 1 {
         return Err(anyhow!("Unsupported target epoch delta"));
     }
-    let stake_account = &client
-        .get_account(stake_account_key)
-        .await
-        .map_err(|e| anyhow!("Failed to fetch StakeAccount: {}", e))?;
+    let maybe_stake_account = &client.get_account(stake_account_key).await;
+    let stake_account = match maybe_stake_account {
+        Ok(account) => account,
+        Err(err) => match &err.kind {
+            solana_client::client_error::ClientErrorKind::RpcError(rpc_error) => match rpc_error {
+                RpcError::RpcResponseError {
+                    code: _,
+                    message,
+                    data: _,
+                } => {
+                    // SoloValidatorBond's initialize stake accounts on the first deposit. So in 
+                    // the case where a bond was created, but no deposits were made, the RPC will
+                    // error with account not found. In this case, we short circuit and return 0 
+                    // as the active stake.
+                    let account_not_found_match = Regex::new(r"^AccountNotFound").unwrap();
+                    if account_not_found_match.is_match(&message) {
+                        warn!("Fetch stake account {} error {:?}", stake_account_key, err);
+                        return Ok(0);
+                    } else {
+                        return Err(anyhow!("Failed to fetch StakeAccount: {}", err));
+                    }
+                }
+                _ => {
+                    return Err(anyhow!("Failed to fetch StakeAccount: {}", err));
+                }
+            },
+            _ => {
+                return Err(anyhow!("Failed to fetch StakeAccount: {}", err));
+            }
+        },
+    };
     let stake_state = &stake_account.deserialize_data::<StakeStateV2>()?;
     // Fetch inflation rewards for the target epoch
     let maybe_inflation_rewards = &client
